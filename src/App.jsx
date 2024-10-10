@@ -12,9 +12,21 @@ import About1 from "./components/About1";
 import Service from "./components/Service";
 import FeaturedProducts from "./components/FeaturedProducts";
 import Footeer from "./components/Footeer";
+import { Fab } from "react-tiny-fab";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function App() {
   const [navbar, setNavbar] = useState(false);
+
+  const openWhatsApp = () => {
+    const phoneNumber = "+2347038122409"; // Replace with the phone number you want to message
+    const message = "Hello, I'm interested in your service."; // Optional: A default message
+
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappURL, "_blank"); // Open in a new tab
+  };
 
   //navbar scroll changeBackground function
   const changeBackground = () => {
@@ -171,6 +183,15 @@ export default function App() {
       <About1 />
       <Reviews />
       <Footeer />
+      <Fab
+        mainButtonStyles={{ backgroundColor: "#25D366" }}
+        // actionButtonStyles={actionButtonStyles}
+        style={{ bottom: 0, right: 0 }}
+        icon={<FaWhatsapp />}
+        // event={event}
+        // alwaysShowTitle={true}
+        onClick={openWhatsApp}
+      />
     </div>
   );
 }
