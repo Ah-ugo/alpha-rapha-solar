@@ -1,11 +1,13 @@
 import React from "react";
 
-export default function NavbarCom({ active }) {
+export default function NavbarCom({ active, className }) {
   return (
     <header
       class={
         !active
-          ? "shadow fixed z-50 w-full top-0 bg-white/20 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
+          ? className
+            ? className
+            : "shadow fixed z-50 w-full top-0 bg-white/20 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
           : "shadow fixed z-50 w-full top-0 bg-blue-900 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
       }
     >
