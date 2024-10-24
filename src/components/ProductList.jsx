@@ -96,6 +96,7 @@ export default function ProductList() {
                   img={resp.image_urls[0]}
                   price={resp.price}
                   title={resp.title}
+                  id={resp._id}
                 />
               );
             })}
