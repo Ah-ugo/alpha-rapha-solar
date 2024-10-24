@@ -10,6 +10,10 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 const ProductOverview = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [newReview, setNewReview] = useState({
+    rating: 0,
+    comment: "",
+  });
 
   useEffect(() => {
     GetProductById(id).then((rep) => {
@@ -17,6 +21,44 @@ const ProductOverview = () => {
       console.log("Product Data: ", rep); // Log the product data
     });
   }, [id]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewReview((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleRatingChange = (rating) => {
+    setNewReview((prev) => ({
+      ...prev,
+      rating,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Submit review logic here
+    const reviewData = {
+      rating: newReview.rating,
+      comment: newReview.comment,
+    };
+
+    console.log("New Review Submitted: ", reviewData);
+
+    // Here you would typically send the reviewData to your server.
+    // Example:
+    // submitReview(product._id, reviewData).then(response => {
+    //   // Handle response and update state as necessary
+    // });
+
+    // Optionally reset the review form
+    setNewReview({
+      rating: 0,
+      comment: "",
+    });
+  };
 
   if (!product) {
     return <div>Loading...</div>;
@@ -155,6 +197,52 @@ const ProductOverview = () => {
         ) : (
           <p className="text-gray-600">No reviews yet.</p>
         )}
+      </div>
+
+      {/* Review Form */}
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold text-gray-800">Write a Review</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="mt-4 bg-white p-4 rounded-lg shadow"
+        >
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-1">Your Review</label>
+            <textarea
+              name="comment"
+              value={newReview.comment}
+              onChange={handleInputChange}
+              className="border border-gray-300 rounded p-2 w-full"
+              rows="4"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-1">Rating</label>
+            <div className="flex">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => handleRatingChange(star)}
+                  className={`text-2xl ${
+                    newReview.rating >= star
+                      ? "text-yellow-400"
+                      : "text-gray-300"
+                  }`}
+                >
+                  <FaStar />
+                </button>
+              ))}
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600"
+          >
+            Submit Review
+          </button>
+        </form>
       </div>
     </div>
   );
