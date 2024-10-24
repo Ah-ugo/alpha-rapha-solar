@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import Slider from "react-slick";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import { GetProductById } from "../utils/Products";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const ProductOverview = () => {
   const { id } = useParams();
-  const [product, setProducts] = useState(null);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     GetProductById(id).then((rep) => {
-      setProducts(rep);
+      setProduct(rep); // Ensure this updates product once
+      console.log("Product Data: ", rep); // Log the product data
     });
   }, [id]);
 
@@ -24,11 +25,12 @@ const ProductOverview = () => {
   // Slider settings
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
+    autoplay: true,
   };
 
   // Function to render stars based on rating
@@ -51,50 +53,50 @@ const ProductOverview = () => {
   };
 
   return (
-    <div className="mx-auto p-6 mt-16">
+    <div className="container mx-auto p-6 mt-16">
       {/* Product Header */}
       <div className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Product Image Carousel */}
         <div className="w-full md:w-1/2">
-          <Slider {...settings} className="w-full h-80">
-            {" "}
-            {/* Adjust height to prevent stacking */}
-            {product?.image_urls?.map((imageUrl, index) => (
-              <motion.div
-                key={index}
-                initial={{
-                  opacity: 0,
-                  y: index % 2 === 0 ? 50 : -50, // Slide from bottom for even, top for odd
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 1,
-                  },
-                }}
-                className="flex justify-center items-center" // Center image inside the carousel
-              >
-                <img
-                  src={imageUrl || "https://via.placeholder.com/150"}
-                  alt={product?.title || "Product Image"}
-                  className="object-cover w-full h-80" // Fix image size to match container
-                />
-              </motion.div>
-            ))}
-          </Slider>
+          {product?.image_urls && product.image_urls?.length > 0 && (
+            <Slider {...settings} className="w-full">
+              {product.image_urls.map((imageUrl, index) => (
+                <motion.div
+                  key={index}
+                  initial={{
+                    opacity: 0,
+                    y: index % 2 === 0 ? 50 : -50,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 1,
+                    },
+                  }}
+                  className="flex justify-center items-center"
+                >
+                  <img
+                    src={imageUrl}
+                    alt={product?.title || "Product Image"}
+                    className="object-cover w-full h-auto md:h-80"
+                  />
+                </motion.div>
+              ))}
+            </Slider>
+          )}
         </div>
 
         {/* Product Info */}
         <div className="w-full md:w-1/2 p-6">
-          <h1 className="text-3xl font-bold text-gray-800">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             {product?.title || "No Title"}
           </h1>
           <p className="text-gray-600 text-sm mb-2">
             Category: {product?.category || "Unknown"}
           </p>
           <p className="text-gray-800 text-xl font-semibold mb-4">
-            N{product?.price || "N/A"}
+            ${product?.price || "N/A"}
           </p>
           <p className="text-gray-700 mb-4">
             {product?.description || "No description available"}
@@ -128,7 +130,7 @@ const ProductOverview = () => {
       <div className="mt-8">
         <h2 className="text-2xl font-semibold text-gray-800">Specifications</h2>
         <p className="text-gray-700 mt-2">
-          {product?.text_specifications || "No specifications available"}
+          {product?.text_specifications || "No specifications available."}
         </p>
       </div>
 
@@ -138,20 +140,16 @@ const ProductOverview = () => {
           Customer Reviews
         </h2>
         {product?.reviews?.length > 0 ? (
-          product?.reviews.map((review, index) => (
+          product.reviews.map((review, index) => (
             <div key={index} className="bg-gray-100 p-4 rounded-lg shadow mt-4">
-              <p className="text-gray-800 font-bold">
-                {review?.user || "Anonymous"}
-              </p>
+              <p className="text-gray-800 font-bold">{review.user}</p>
               <div className="flex items-center">
-                {renderStars(review?.rating || 0)}
+                {renderStars(review.rating)}
                 <p className="ml-2 text-sm text-gray-600">
-                  {new Date(review?.created_at).toLocaleDateString()}
+                  {new Date(review.created_at).toLocaleDateString()}
                 </p>
               </div>
-              <p className="mt-2 text-gray-700">
-                {review?.comment || "No comment"}
-              </p>
+              <p className="mt-2 text-gray-700">{review.comment}</p>
             </div>
           ))
         ) : (
