@@ -96,7 +96,7 @@ const ProductOverview = () => {
             Category: {product?.category || "Unknown"}
           </p>
           <p className="text-gray-800 text-xl font-semibold mb-4">
-            ${product?.price || "N/A"}
+            N{product?.price || "N/A"}
           </p>
           <p className="text-gray-700 mb-4">
             {product?.description || "No description available"}
