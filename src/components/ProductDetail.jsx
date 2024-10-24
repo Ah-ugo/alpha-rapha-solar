@@ -160,7 +160,7 @@ const ProductOverview = () => {
           <a
             href={product?.pdf_specifications || "#"}
             className="text-blue-500 underline"
-            target="_blank"
+            // target="_blank"
             rel="noopener noreferrer"
           >
             View PDF Specifications
