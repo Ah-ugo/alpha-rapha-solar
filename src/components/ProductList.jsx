@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import ProductListCard from "./ProductListCard";
 import solar1 from "../assets/solar_1.jpg";
 import solar2 from "../assets/solar_2.jpg";
+import { LoadAllProducts } from "../utils/Products";
 
 export default function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    LoadAllProducts().then((rep) => {
+      setProducts(rep);
+    });
+  }, []);
   return (
     <div className="mt-5 px- xl:px-0 py-12">
       <div className="flex flex-col">
@@ -43,10 +51,11 @@ export default function ProductList() {
 
         <div className="mx-4">
           <div className="mt-10 grid lg:grid-cols-2 gap-x-8 gap-y-8 items-center">
-            <ProductListCard
+            {/* <ProductListCard
               img={
                 "https://solarstepza.co.za/cdn/shop/files/ecco-550W-SOLAR-PANEL_png_4bdbb790-bf4a-4531-b1c2-4992216b1593.webp?v=1728996623&width=360"
               }
+              price={""}
               title={"Mono Crystal Solar Panel"}
             />
             <ProductListCard
@@ -80,7 +89,16 @@ export default function ProductList() {
               img={
                 "https://innovateenergy.com.ng/wp-content/uploads/2024/04/MF48100.1-1024x702.png"
               }
-            />
+            /> */}
+            {products.map((resp) => {
+              return (
+                <ProductListCard
+                  img={resp.image_urls[0]}
+                  price={resp.price}
+                  title={resp.title}
+                />
+              );
+            })}
           </div>
           {/* <div className="flex justify-end items-end mt-12">
             <div className="flex flex-row items-center justify-center space-x-8">

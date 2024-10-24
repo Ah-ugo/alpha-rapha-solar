@@ -3,6 +3,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { LoadAllProducts } from "../utils/Products";
 
 const products = [
   {
@@ -59,6 +61,13 @@ const products = [
 ];
 
 export default function FeaturedProducts() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    LoadAllProducts().then((rep) => {
+      setProducts(rep);
+    });
+  }, []);
   var settings = {
     dots: true,
     infinite: true,
@@ -188,21 +197,21 @@ export default function FeaturedProducts() {
               >
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img
-                    alt={product.imageAlt}
-                    src={product.imageSrc}
+                    alt={product.title}
+                    src={product.image_urls[0]}
                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                   />
                 </div>
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-100">
-                      <a href={product.href}>
+                      <a href={product?.href}>
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {product.name}
+                        {product.title}
                       </a>
                     </h3>
                     <p className="mt-1 text-sm text-gray-100">
-                      {product.color}
+                      {product?.color}
                     </p>
                   </div>
                   <p className="text-sm font-medium text-gray-300">

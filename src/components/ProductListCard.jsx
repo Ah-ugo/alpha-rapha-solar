@@ -17,7 +17,7 @@ export default function ProductListCard({ title, img, price }) {
           </div>
           <div>
             <p className="group-hover:opacity-60 transition duration-500 text-xl font-semibold leading-5 text-gray-800">
-              $78900
+              N{price}
             </p>
           </div>
         </div>
