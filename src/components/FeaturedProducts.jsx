@@ -196,7 +196,7 @@ export default function FeaturedProducts() {
                 className="group relative px-6 flex gap-6"
               >
                 <a href={`/detail/${product._id}`}>
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                  <div className="aspect-h-1 aspect-w-1 w-full h-80 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                     <img
                       alt={product.title}
                       src={product.image_urls[0]}
