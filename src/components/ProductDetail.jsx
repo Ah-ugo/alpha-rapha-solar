@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
-import { GetProductById } from "../utils/Products";
+import { AddReview, GetProductById } from "../utils/Products";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import ModalWrapper from "./ModalWrapper";
+import { useDisclosure } from "@nextui-org/react";
 
 const ProductOverview = () => {
   const { id } = useParams();
@@ -14,6 +16,7 @@ const ProductOverview = () => {
     rating: 0,
     comment: "",
   });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     GetProductById(id).then((rep) => {
@@ -39,7 +42,16 @@ const ProductOverview = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit review logic here
+
+    // Check for the authorization token
+    const token = localStorage.getItem("alpharapha_token");
+    if (!token) {
+      // Open the modal if the token is not found
+      onOpen();
+      return; // Exit the function to prevent further execution
+    }
+
+    // Continue with review submission if token exists
     const reviewData = {
       rating: newReview.rating,
       comment: newReview.comment,
@@ -47,22 +59,33 @@ const ProductOverview = () => {
 
     console.log("New Review Submitted: ", reviewData);
 
-    // Here you would typically send the reviewData to your server.
-    // Example:
-    // submitReview(product._id, reviewData).then(response => {
-    //   // Handle response and update state as necessary
-    // });
-
-    // Optionally reset the review form
-    setNewReview({
-      rating: 0,
-      comment: "",
-    });
+    AddReview(reviewData, id)
+      .then((resp) => {
+        console.log("Review submission response: ", resp);
+        // Reload product data after successful review submission
+        GetProductById(id).then((rep) => {
+          setProduct(rep);
+          console.log("Updated Product Data: ", rep);
+        });
+        // Reset the review form
+        setNewReview({
+          rating: 0,
+          comment: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Error submitting review: ", error);
+      });
   };
 
   if (!product) {
     return <div>Loading...</div>;
   }
+
+  const handleOpen = () => {
+    // setSize(size)
+    onOpen();
+  };
 
   // Slider settings
   const settings = {
@@ -244,6 +267,7 @@ const ProductOverview = () => {
           </button>
         </form>
       </div>
+      <ModalWrapper isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </div>
   );
 };

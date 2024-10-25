@@ -1,32 +1,55 @@
 import axios from "axios";
 
+// Load all products with error handling
 export async function LoadAllProducts() {
-  const resp = await axios.get(
-    "https://alpha-rapha-solar-backend.vercel.app/products/"
-  );
-  console.log(resp.data, "hello===");
-  return resp.data;
+  try {
+    const resp = await axios.get(
+      "https://alpha-rapha-solar-backend.vercel.app/products/"
+    );
+    console.log("Loaded Products: ", resp.data);
+    return resp.data;
+  } catch (error) {
+    console.error(
+      "Error loading products: ",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
 }
 
+// Load a specific product by ID with error handling
 export async function GetProductById(id) {
-  const resp = await axios.get(
-    `https://alpha-rapha-solar-backend.vercel.app/products/${id}`
-  );
-  console.log(resp.data, "lello===");
-  return resp.data;
+  try {
+    const resp = await axios.get(
+      `https://alpha-rapha-solar-backend.vercel.app/products/${id}`
+    );
+    console.log(`Product with ID ${id} Loaded: `, resp.data);
+    return resp.data;
+  } catch (error) {
+    console.error(
+      `Error loading product with ID ${id}: `,
+      error.response?.data || error.message
+    );
+    throw error;
+  }
 }
 
 export async function AddReview(input, id) {
-  const resp = await axios.post(
-    `https://alpha-rapha-solar-backend.vercel.app/reviews/${id}`,
-    input,
-    {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${localStorage.getItem("alpharapha_token==")}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
-  return resp.data;
+  try {
+    const response = await axios.post(
+      `https://alpha-rapha-solar-backend.vercel.app/reviews/${id}`,
+      input,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("alpharapha_token")}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data; // Only return the data portion for simplicity
+  } catch (error) {
+    console.error("Error in AddReview:", error);
+    throw error; // Rethrow to handle in calling function if necessary
+  }
 }
