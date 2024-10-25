@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Login function with error handling and token storage
+// Login function
 export async function LoginUser(formData) {
   try {
     const resp = await axios.post(
@@ -15,8 +15,8 @@ export async function LoginUser(formData) {
     );
     console.log("Login Response: ", resp.data);
 
-    // Store token with standardized key name
     localStorage.setItem("alpharapha_token", resp.data.access_token);
+    localStorage.setItem("alphrapha_details", JSON.stringify(resp.data));
     return resp.data;
   } catch (error) {
     console.error("Login Error: ", error.response?.data || error.message);
@@ -24,7 +24,7 @@ export async function LoginUser(formData) {
   }
 }
 
-// Register function with error handling and optional token storage
+// Register function
 export async function RegisterUser(formData, storeToken = false) {
   try {
     const resp = await axios.post(
@@ -39,7 +39,6 @@ export async function RegisterUser(formData, storeToken = false) {
     );
     console.log("Register Response: ", resp.data);
 
-    // Optionally store token if provided in the response and storeToken is true
     if (storeToken && resp.data.access_token) {
       localStorage.setItem("alpharapha_token", resp.data.access_token);
     }

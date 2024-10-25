@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Load all products with error handling
+// Load all products
 export async function LoadAllProducts() {
   try {
     const resp = await axios.get(
@@ -17,7 +17,7 @@ export async function LoadAllProducts() {
   }
 }
 
-// Load a specific product by ID with error handling
+// Load product by ID
 export async function GetProductById(id) {
   try {
     const resp = await axios.get(
@@ -47,9 +47,9 @@ export async function AddReview(input, id) {
         },
       }
     );
-    return response.data; // Only return the data portion for simplicity
+    return response.data;
   } catch (error) {
     console.error("Error in AddReview:", error);
-    throw error; // Rethrow to handle in calling function if necessary
+    throw error;
   }
 }

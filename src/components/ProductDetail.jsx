@@ -20,8 +20,8 @@ const ProductOverview = () => {
 
   useEffect(() => {
     GetProductById(id).then((rep) => {
-      setProduct(rep); // Ensure this updates product once
-      console.log("Product Data: ", rep); // Log the product data
+      setProduct(rep);
+      console.log("Product Data: ", rep);
     });
   }, [id]);
 
@@ -43,15 +43,12 @@ const ProductOverview = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check for the authorization token
     const token = localStorage.getItem("alpharapha_token");
     if (!token) {
-      // Open the modal if the token is not found
       onOpen();
-      return; // Exit the function to prevent further execution
+      return;
     }
 
-    // Continue with review submission if token exists
     const reviewData = {
       rating: newReview.rating,
       comment: newReview.comment,
@@ -62,12 +59,12 @@ const ProductOverview = () => {
     AddReview(reviewData, id)
       .then((resp) => {
         console.log("Review submission response: ", resp);
-        // Reload product data after successful review submission
+        // Reload product data after successful submission
         GetProductById(id).then((rep) => {
           setProduct(rep);
           console.log("Updated Product Data: ", rep);
         });
-        // Reset the review form
+        // Reset review form
         setNewReview({
           rating: 0,
           comment: "",
