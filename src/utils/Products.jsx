@@ -1,55 +1,54 @@
 import axios from "axios";
 
-// Load all products
-export async function LoadAllProducts() {
-  try {
-    const resp = await axios.get(
-      "https://alpha-rapha-solar-backend.vercel.app/products/"
-    );
-    console.log("Loaded Products: ", resp.data);
-    return resp.data;
-  } catch (error) {
-    console.error(
-      "Error loading products: ",
-      error.response?.data || error.message
-    );
-    throw error;
-  }
-}
+// Define primary and backup API URLs
+const API_URL_PRIMARY = "https://alpha-rapha-solar-backend.vercel.app";
+const API_URL_SECONDARY = "https://alpha-rapha-solar-backend.onrender.com";
 
-// Load product by ID
-export async function GetProductById(id) {
+// Helper function to make requests with fallback
+async function apiRequest(endpoint, options = {}) {
   try {
-    const resp = await axios.get(
-      `https://alpha-rapha-solar-backend.vercel.app/products/${id}`
-    );
-    console.log(`Product with ID ${id} Loaded: `, resp.data);
-    return resp.data;
-  } catch (error) {
-    console.error(
-      `Error loading product with ID ${id}: `,
-      error.response?.data || error.message
-    );
-    throw error;
-  }
-}
-
-export async function AddReview(input, id) {
-  try {
-    const response = await axios.post(
-      `https://alpha-rapha-solar-backend.vercel.app/reviews/${id}`,
-      input,
-      {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("alpharapha_token")}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // Attempt request with primary API URL
+    const response = await axios({
+      ...options,
+      url: `${API_URL_PRIMARY}${endpoint}`,
+    });
     return response.data;
-  } catch (error) {
-    console.error("Error in AddReview:", error);
-    throw error;
+  } catch (primaryError) {
+    console.error("Primary API failed, attempting secondary:", primaryError);
+    try {
+      // Attempt request with secondary API URL
+      const response = await axios({
+        ...options,
+        url: `${API_URL_SECONDARY}${endpoint}`,
+      });
+      return response.data;
+    } catch (secondaryError) {
+      console.error("Secondary API also failed:", secondaryError);
+      throw new Error("Both primary and secondary APIs failed.");
+    }
   }
+}
+
+// Load all products with fallback
+export async function LoadAllProducts() {
+  return await apiRequest("/products/");
+}
+
+// Load product by ID with fallback
+export async function GetProductById(id) {
+  return await apiRequest(`/products/${id}`);
+}
+
+// Add review with fallback
+export async function AddReview(input, id) {
+  const token = localStorage.getItem("alpharapha_token");
+  return await apiRequest(`/reviews/${id}`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    data: input,
+  });
 }

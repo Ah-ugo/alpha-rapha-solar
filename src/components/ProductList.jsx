@@ -4,15 +4,39 @@ import ProductListCard from "./ProductListCard";
 import solar1 from "../assets/solar_1.jpg";
 import solar2 from "../assets/solar_2.jpg";
 import { LoadAllProducts } from "../utils/Products";
+import { Center } from "@chakra-ui/react";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    LoadAllProducts().then((rep) => {
-      setProducts(rep);
-    });
+    // Load products with error handling
+    LoadAllProducts()
+      .then((rep) => {
+        setProducts(rep);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load products:", err);
+        setError("Failed to load products. Please try again later.");
+        setLoading(false);
+      });
   }, []);
+
+  if (loading)
+    return (
+      <Center className="h-screen">
+        <div>Loading products...</div>
+      </Center>
+    );
+  if (error)
+    return (
+      <Center className="h-screen">
+        <div className="text-red-500">{error}</div>
+      </Center>
+    );
   return (
     <div className="mt-5 px- xl:px-0 py-12">
       <div className="flex flex-col">

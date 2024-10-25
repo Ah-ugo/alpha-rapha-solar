@@ -8,10 +8,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import ModalWrapper from "./ModalWrapper";
 import { useDisclosure } from "@nextui-org/react";
+import { Center } from "@chakra-ui/react";
 
 const ProductOverview = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [newReview, setNewReview] = useState({
     rating: 0,
     comment: "",
@@ -19,10 +22,18 @@ const ProductOverview = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    GetProductById(id).then((rep) => {
-      setProduct(rep);
-      console.log("Product Data: ", rep);
-    });
+    setLoading(true); // Start loading
+    setError(null); // Reset error
+    GetProductById(id)
+      .then((rep) => {
+        setProduct(rep);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load product:", err);
+        setError("Failed to load product. Please try again later.");
+        setLoading(false);
+      });
   }, [id]);
 
   const handleInputChange = (e) => {
@@ -54,15 +65,12 @@ const ProductOverview = () => {
       comment: newReview.comment,
     };
 
-    console.log("New Review Submitted: ", reviewData);
-
     AddReview(reviewData, id)
       .then((resp) => {
-        console.log("Review submission response: ", resp);
+        console.log("Review submitted:", resp);
         // Reload product data after successful submission
         GetProductById(id).then((rep) => {
           setProduct(rep);
-          console.log("Updated Product Data: ", rep);
         });
         // Reset review form
         setNewReview({
@@ -71,17 +79,8 @@ const ProductOverview = () => {
         });
       })
       .catch((error) => {
-        console.error("Error submitting review: ", error);
+        console.error("Error submitting review:", error);
       });
-  };
-
-  if (!product) {
-    return <div>Loading...</div>;
-  }
-
-  const handleOpen = () => {
-    // setSize(size)
-    onOpen();
   };
 
   // Slider settings
@@ -95,7 +94,6 @@ const ProductOverview = () => {
     autoplay: true,
   };
 
-  // Function to render stars based on rating
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
     const halfStars = rating - fullStars > 0 ? 1 : 0;
@@ -114,6 +112,19 @@ const ProductOverview = () => {
     );
   };
 
+  if (loading)
+    return (
+      <Center className="h-screen">
+        <div>Loading product...</div>
+      </Center>
+    );
+  if (error)
+    return (
+      <Center className="h-screen">
+        <div className="text-red-500">{error}</div>
+      </Center>
+    );
+
   return (
     <div className="container mx-auto p-6 mt-16">
       {/* Product Header */}
@@ -125,16 +136,11 @@ const ProductOverview = () => {
               {product.image_urls.map((imageUrl, index) => (
                 <motion.div
                   key={index}
-                  initial={{
-                    opacity: 0,
-                    y: index % 2 === 0 ? 50 : -50,
-                  }}
+                  initial={{ opacity: 0, y: index % 2 === 0 ? 50 : -50 }}
                   whileInView={{
                     opacity: 1,
                     y: 0,
-                    transition: {
-                      duration: 1,
-                    },
+                    transition: { duration: 1 },
                   }}
                   className="flex justify-center items-center"
                 >
@@ -180,7 +186,6 @@ const ProductOverview = () => {
           <a
             href={product?.pdf_specifications || "#"}
             className="text-blue-500 underline"
-            // target="_blank"
             rel="noopener noreferrer"
           >
             View PDF Specifications
@@ -264,6 +269,7 @@ const ProductOverview = () => {
           </button>
         </form>
       </div>
+
       <ModalWrapper isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </div>
   );
