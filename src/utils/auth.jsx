@@ -26,16 +26,20 @@ export async function LoginUser(formData, urls) {
   throw new Error("All servers are down or unreachable");
 }
 
-// Register function
 export async function RegisterUser(formData, urls, storeToken = false) {
   for (const url of urls) {
     try {
-      const resp = await axios.post(`${url}/user/register`, formData, {
+      // Construct the query parameters
+      const params = new URLSearchParams(formData).toString();
+      const fullUrl = `${url}/user/register?${params}`;
+
+      const resp = await axios.post(fullUrl, null, {
+        // Pass null as the second argument
         headers: {
           accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
         },
       });
+
       console.log("Register Response: ", resp.data);
 
       if (storeToken && resp.data.access_token) {

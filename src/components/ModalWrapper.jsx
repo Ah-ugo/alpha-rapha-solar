@@ -1,13 +1,13 @@
-import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import React, { useState } from "react";
 import { FiUser, FiMail, FiLock, FiEdit3 } from "react-icons/fi";
 import { LoginUser, RegisterUser } from "../utils/auth";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@chakra-ui/react";
 
 export default function ModalWrapper({ isOpen, onClose }) {
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
-    fullname: "",
+    full_name: "", // Ensure this matches backend expectations
     email: "",
     password: "",
     confirmPassword: "",
@@ -17,14 +17,14 @@ export default function ModalWrapper({ isOpen, onClose }) {
 
   const urls = [
     "https://alpha-rapha-solar-backend.vercel.app",
-    "https://alpha-rapha-solar-backend.onrender.com/",
+    "https://alpha-rapha-solar-backend.onrender.com",
   ];
 
   const toggleForm = () => {
     setIsRegister(!isRegister);
     setFormData({
       username: "",
-      fullname: "",
+      full_name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -40,8 +40,8 @@ export default function ModalWrapper({ isOpen, onClose }) {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.username) newErrors.username = "Username is required.";
-    if (isRegister && !formData.fullname)
-      newErrors.fullname = "Full name is required.";
+    if (isRegister && !formData.full_name)
+      newErrors.full_name = "Full name is required.";
     if (isRegister && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
       newErrors.email = "Please enter a valid email.";
     if (!formData.password) newErrors.password = "Password is required.";
@@ -58,7 +58,17 @@ export default function ModalWrapper({ isOpen, onClose }) {
 
     try {
       if (isRegister) {
-        await RegisterUser(new URLSearchParams(formData), urls);
+        // Prepare form data for registration
+        const registrationData = {
+          username: formData.username,
+          full_name: formData.full_name, // Ensure this matches the backend expectations
+          email: formData.email,
+          password: formData.password,
+          confirm_password: formData.confirmPassword, // Ensure this matches the backend expectations
+        };
+
+        // Call RegisterUser with the prepared data
+        await RegisterUser(registrationData, urls, true);
         alert("Registered successfully!");
         toggleForm();
       } else {
@@ -73,19 +83,15 @@ export default function ModalWrapper({ isOpen, onClose }) {
       }
     } catch (err) {
       setErrors({ form: "An error occurred. Please try again." });
+      console.error("Registration or Login error:", err); // Log the error for debugging
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Modal
-      size={"lg"}
-      isOpen={isOpen}
-      onClose={onClose}
-      shouldBlockScroll={false}
-    >
-      <ModalContent style={isRegister ? { marginTop: 300 } : null}>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalContent style={isRegister ? { marginTop: 50 } : null}>
         <ModalHeader className="text-center text-gray-800 font-bold text-2xl">
           {isRegister ? "Create an Account" : "Login"}
         </ModalHeader>
@@ -105,8 +111,132 @@ export default function ModalWrapper({ isOpen, onClose }) {
               onSubmit={handleSubmit}
               className="bg-white px-10 pb-8 rounded-xl w-full max-w-md shadow-xl"
             >
-              {/* Form Fields */}
-              {/* ... Form Fields Code Here ... */}
+              <div className="space-y-4">
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Username
+                  </label>
+                  <div className="flex items-center border-2 py-2 px-3 rounded-md">
+                    <FiUser className="text-gray-400" size={20} />
+                    <input
+                      type="text"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleInputChange}
+                      className="pl-2 outline-none border-none w-full"
+                      placeholder="Enter your username"
+                      required
+                    />
+                  </div>
+                  {errors.username && (
+                    <p className="text-red-500 text-sm mt-2">
+                      {errors.username}
+                    </p>
+                  )}
+                </div>
+
+                {isRegister && (
+                  <>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-semibold mb-2">
+                        Full Name
+                      </label>
+                      <div className="flex items-center border-2 py-2 px-3 rounded-md">
+                        <FiEdit3 className="text-gray-400" size={20} />
+                        <input
+                          type="text"
+                          name="full_name" // Change from 'fullname' to 'full_name'
+                          value={formData.full_name} // Ensure this matches formData
+                          onChange={handleInputChange}
+                          className="pl-2 outline-none border-none w-full"
+                          placeholder="Enter your full name"
+                          required
+                        />
+                      </div>
+                      {errors.full_name && (
+                        <p className="text-red-500 text-sm mt-2">
+                          {errors.full_name}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-semibold mb-2">
+                        Email
+                      </label>
+                      <div className="flex items-center border-2 py-2 px-3 rounded-md">
+                        <FiMail className="text-gray-400" size={20} />
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className="pl-2 outline-none border-none w-full"
+                          placeholder="Enter your email"
+                          required
+                        />
+                      </div>
+                      {errors.email && (
+                        <p className="text-red-500 text-sm mt-2">
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Password
+                  </label>
+                  <div className="flex items-center border-2 py-2 px-3 rounded-md">
+                    <FiLock className="text-gray-400" size={20} />
+                    <input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="pl-2 outline-none border-none w-full"
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+                  {errors.password && (
+                    <p className="text-red-500 text-sm mt-2">
+                      {errors.password}
+                    </p>
+                  )}
+                </div>
+
+                {isRegister && (
+                  <div className="mb-4">
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Confirm Password
+                    </label>
+                    <div className="flex items-center border-2 py-2 px-3 rounded-md">
+                      <FiLock className="text-gray-400" size={20} />
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        className="pl-2 outline-none border-none w-full"
+                        placeholder="Confirm your password"
+                        required
+                      />
+                    </div>
+                    {errors.confirmPassword && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {errors.confirmPassword}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {errors.form && (
+                  <p className="text-red-500 text-center">{errors.form}</p>
+                )}
+              </div>
 
               <button
                 type="submit"

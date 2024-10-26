@@ -7,8 +7,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import ModalWrapper from "./ModalWrapper";
-import { useDisclosure } from "@nextui-org/react";
-import { Center } from "@chakra-ui/react";
+// import { useDisclosure } from "@nextui-org/react";
+import { Center, useDisclosure } from "@chakra-ui/react";
 
 const ProductOverview = () => {
   const { id } = useParams();

@@ -1,7 +1,7 @@
-import { useDisclosure } from "@nextui-org/react";
+// import { useDisclosure } from "@nextui-org/react";
 import React from "react";
 import ModalWrapper from "./ModalWrapper";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, useDisclosure } from "@chakra-ui/react";
 
 export default function NavbarCom({ active, className }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
