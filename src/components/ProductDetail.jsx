@@ -19,7 +19,24 @@ const ProductOverview = () => {
     rating: 0,
     comment: "",
   });
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [specs, setSpecs] = useState([]);
+
+  useEffect(() => {
+    // Example API response
+    // const apiResponse = "Rated Output Power: 1000W Battery Support: Li-ion and Lead-Acid (12 Vd.c.) Maximum PV Charging Current: 30A Maximum PV Array Power: 400W (PWM) Efficient Solar Energy Conversion: Wide input voltage range Quiet Operation: <45 dB Protection: IP20 enclosure Warranty: 2 years";
+
+    // Split the response into key-value pairs
+    const specsArray = product?.text_specifications
+      .split(/(?=\b[A-Z])/)
+      .map((item) => {
+        const [label, value] = item.split(":").map((str) => str.trim());
+        return { label, value };
+      });
+
+    setSpecs(specsArray);
+  }, []);
 
   useEffect(() => {
     setLoading(true); // Start loading
@@ -196,9 +213,22 @@ const ProductOverview = () => {
       {/* Product Specifications */}
       <div className="mt-8">
         <h2 className="text-2xl font-semibold text-gray-800">Specifications</h2>
-        <p className="text-gray-700 mt-2">
+        {/* <p className="text-gray-700 mt-2">
           {product?.text_specifications || "No specifications available."}
-        </p>
+        </p> */}
+        <ul className="divide-y divide-gray-200">
+          {product?.text_specifications?.map((spec, index) => (
+            <li
+              key={index}
+              className="flex justify-between items-center py-3 px-2 hover:bg-blue-50"
+            >
+              <strong className="text-gray-700 font-medium">
+                {spec.label}:
+              </strong>
+              <span className="text-gray-600">{spec.value}</span>
+            </li>
+          )) || "No specifications available."}
+        </ul>
       </div>
 
       {/* Customer Reviews */}

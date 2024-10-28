@@ -91,7 +91,7 @@ export default function NavbarCom({ active, className }) {
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Text color={"wheat"} fontSize={"lg"}>
+                  <Text color={"wheat"} fontSize={"md"}>
                     {parsedLocaleData?.username}
                   </Text>
                   <Text color={"wheat"} fontSize={"sm"}>
