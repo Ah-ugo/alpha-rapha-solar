@@ -9,6 +9,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import ModalWrapper from "./ModalWrapper";
 // import { useDisclosure } from "@nextui-org/react";
 import { Center, useDisclosure } from "@chakra-ui/react";
+import Modal from "./Modal2";
 
 const ProductOverview = () => {
   const { id } = useParams();
@@ -22,6 +23,18 @@ const ProductOverview = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [specs, setSpecs] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const openModal = (imageSrc) => {
+    setSelectedImage(imageSrc);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedImage(null);
+  };
 
   useEffect(() => {
     // Example API response
@@ -163,6 +176,8 @@ const ProductOverview = () => {
                 >
                   <img
                     src={imageUrl}
+                    id="img"
+                    onClick={() => openModal(imageUrl)}
                     alt={product?.title || "Product Image"}
                     className="object-cover w-full h-auto md:h-80"
                   />
@@ -299,7 +314,25 @@ const ProductOverview = () => {
           </button>
         </form>
       </div>
-
+      {/* The Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+          <div className="relative bg-white rounded-lg p-5 max-w-lg mx-auto">
+            <span
+              className="absolute top-4 right-4 text-gray-600 text-3xl cursor-pointer hover:text-gray-900"
+              onClick={closeModal}
+            >
+              &times;
+            </span>
+            <img
+              src={selectedImage}
+              alt="Selected"
+              className="modal-content w-full rounded-md"
+            />
+            {/* <div className="text-center text-gray-500 mt-4">{caption}</div> */}
+          </div>
+        </div>
+      )}
       <ModalWrapper isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </div>
   );
