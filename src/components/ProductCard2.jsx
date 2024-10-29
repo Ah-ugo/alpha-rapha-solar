@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { formatNumber, truncateString } from "../Pages/FormatString";
+import { formatNumber, truncateString } from "../utils/FormatString";
 
 const ProductCard2 = ({
   category,
@@ -11,6 +11,7 @@ const ProductCard2 = ({
   img_url,
   id,
   price,
+  onClick,
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -68,7 +69,10 @@ const ProductCard2 = ({
               </div>
             </div>
           </a>
-          <button className="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+          <button
+            onClick={onClick}
+            className="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+          >
             Add to Cart
           </button>
         </div>

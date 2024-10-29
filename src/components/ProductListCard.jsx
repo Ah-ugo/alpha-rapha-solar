@@ -1,5 +1,5 @@
 import React from "react";
-import { formatNumber } from "../Pages/FormatString";
+import { formatNumber } from "../utils/FormatString";
 
 export default function ProductListCard({ title, img, price, id }) {
   return (

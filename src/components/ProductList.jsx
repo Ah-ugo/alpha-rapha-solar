@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import ProductListCard from "./ProductListCard";
 import solar1 from "../assets/solar_1.jpg";
@@ -6,11 +6,13 @@ import solar2 from "../assets/solar_2.jpg";
 import { LoadAllProducts } from "../utils/Products";
 import { Center } from "@chakra-ui/react";
 import ProductCard2 from "./ProductCard2";
+import { Context } from "../Context/mainContext";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { cart, handleAddToCart, handleRemoveFromCart } = useContext(Context);
 
   useEffect(() => {
     // Load products with error handling
@@ -126,6 +128,7 @@ export default function ProductList() {
                   category={resp.category}
                   rating={resp.ratings}
                   review={resp.reviews?.length}
+                  onClick={() => handleAddToCart(resp)}
                 />
               );
             })}

@@ -10,7 +10,7 @@ import ModalWrapper from "./ModalWrapper";
 // import { useDisclosure } from "@nextui-org/react";
 import { Center, useDisclosure } from "@chakra-ui/react";
 import Modal from "./Modal2";
-import { formatNumber } from "../Pages/FormatString";
+import { formatNumber } from "../utils/FormatString";
 
 const ProductOverview = () => {
   const { id } = useParams();

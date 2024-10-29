@@ -1,10 +1,48 @@
 // import { useDisclosure } from "@nextui-org/react";
-import React from "react";
+import React, { useContext } from "react";
 import ModalWrapper from "./ModalWrapper";
-import { Flex, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Input,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { BsCart2 } from "react-icons/bs";
+import { RiMenu3Line } from "react-icons/ri";
+import {
+  Avatar,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
+import { Cart } from "./Cart";
+import { Context } from "../Context/mainContext";
 
 export default function NavbarCom({ active, className }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenModal1,
+    onOpen: onOpenModal1,
+    onClose: onCloseModal1,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenModal2,
+    onOpen: onOpenModal2,
+    onClose: onCloseModal2,
+  } = useDisclosure();
+
+  const { cart } = useContext(Context);
+
+  const btnRef = React.useRef();
+
   const localeData = localStorage.getItem("alphrapha_details");
   const parsedLocaleData = JSON.parse(localeData);
   console.log(parsedLocaleData);
@@ -22,7 +60,7 @@ export default function NavbarCom({ active, className }) {
       <div className="relative flex max-w-screen-xl flex-col overflow-hidden px-4 py-4 md:mx-auto md:flex-row md:items-center">
         <a
           href="#"
-          className="flex items-center whitespace-nowrap text-2xl font-black"
+          className="flex items-center whitespace-nowrap text-xl md:text-2xl font-black"
         >
           <span className="mr-2 text-4xl text-blue-600">
             <svg
@@ -42,69 +80,121 @@ export default function NavbarCom({ active, className }) {
           </span>
           <span className="text-gray-50">Alpha-Rapha Solar</span>
         </a>
+
         <input type="checkbox" className="peer hidden" id="navbar-open" />
-        <label
-          className="absolute top-5 text-white right-7 cursor-pointer md:hidden"
-          htmlFor="navbar-open"
+
+        <Flex
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          gap={5}
+          className="absolute top-5 right-7"
         >
-          <span className="sr-only">Toggle Navigation</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
+          {/* Flex container for Login and Cart icon */}
+          <Flex
+            alignItems={"center"}
+            gap={4}
+            className="mt md:mt-0 md:ml-auto md:flex md:justify-end"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </label>
+            {!localeData ? (
+              <button
+                onClick={onOpenModal1}
+                className="rounded-md border-2 hidden sm:block border-blue-600 px-6 py-1 font-medium text-blue-600 transition-colors hover:bg-blue-600 hover:text-white"
+              >
+                Login
+              </button>
+            ) : (
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <Avatar
+                    isBordered
+                    as="button"
+                    className="transition-transform"
+                    color="secondary"
+                    name={parsedLocaleData?.full_name}
+                    size="sm"
+                    // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">{parsedLocaleData?.email}</p>
+                  </DropdownItem>
+                  {/* <DropdownItem key="settings">My Settings</DropdownItem> */}
+                  {/* <DropdownItem key="team_settings">Team Settings</DropdownItem> */}
+                  {/* <DropdownItem key="analytics">Analytics</DropdownItem> */}
+                  {/* <DropdownItem key="system">System</DropdownItem> */}
+                  {/* <DropdownItem key="configurations">Configurations</DropdownItem> */}
+                  {/* <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem> */}
+                  <DropdownItem key="logout" color="danger">
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            )}
+            <div className="relative inline-block">
+              <button onClick={onOpenModal2} className="relative">
+                <BsCart2 size={28} className="text-white cursor-pointer" />
+                {/* {cart.products.length > 0 && ( */}
+                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white">
+                  {cart.products.length}
+                </span>
+                {/* )} */}
+              </button>
+            </div>
+          </Flex>
+          <label
+            className="text-white cursor-pointer md:hidden"
+            htmlFor="navbar-open"
+          >
+            <span className="sr-only">Toggle Navigation</span>
+            <RiMenu3Line size={28} />
+          </label>
+        </Flex>
+
         <nav
           aria-label="Header Navigation"
-          className="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between overflow-hidden transition-all md:ml-24 md:max-h-full md:flex-row md:items-start"
+          className="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between overflow-hidden transition-all md:ml-24 md:max-h-full md:flex-row md:items-center md:justify-between"
         >
-          <ul className="flex flex-col items-center space-y-2 md:ml-auto md:flex-row md:space-y-0">
-            <li className="text-gray-100 md:mr-12 hover:text-blue-600">
+          <ul className="flex flex-col items-center space-y-2 md:flex-row md:space-x-12 md:space-y-0 md:justify-center">
+            <li className="text-gray-100 hover:text-blue-600">
               <a href="/">Home</a>
             </li>
-            <li className="text-gray-100 md:mr-12 hover:text-blue-600">
+            <li className="text-gray-100 hover:text-blue-600">
               <a href="/store">Shop</a>
             </li>
-            <li className="text-gray-100 md:mr-12 hover:text-blue-600">
+            <li className="text-gray-100 hover:text-blue-600">
               <a href="#">Support</a>
-            </li>
-            <li className="text-gray-100 md:mr-12 hover:text-blue-600">
-              {!localeData ? (
-                <button
-                  onClick={onOpen}
-                  className="rounded-md border-2 border-blue-600 px-6 py-1 font-medium text-blue-600 transition-colors hover:bg-blue-600 hover:text-white"
-                >
-                  Login
-                </button>
-              ) : (
-                <Flex
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                >
-                  <Text color={"wheat"} fontSize={"md"}>
-                    {parsedLocaleData?.username}
-                  </Text>
-                  <Text color={"wheat"} fontSize={"sm"}>
-                    {parsedLocaleData?.email}
-                  </Text>
-                </Flex>
-                // <p>something</p>
-              )}
             </li>
           </ul>
         </nav>
       </div>
-      <ModalWrapper isOpen={isOpen} onClose={onClose} />
+
+      <ModalWrapper isOpen={isOpenModal1} onClose={onCloseModal1} />
+      <Drawer
+        size={"xl"}
+        isOpen={isOpenModal2}
+        placement="right"
+        onClose={onCloseModal2}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          {/* <DrawerHeader>Create your account</DrawerHeader> */}
+
+          <DrawerBody>
+            <Cart close={onCloseModal2} />
+          </DrawerBody>
+
+          {/* <DrawerFooter>
+            <Button variant="outline" mr={3} onClick={onCloseModal2}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue">Save</Button>
+          </DrawerFooter> */}
+        </DrawerContent>
+      </Drawer>
     </header>
   );
 }
