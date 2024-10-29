@@ -10,6 +10,7 @@ import ModalWrapper from "./ModalWrapper";
 // import { useDisclosure } from "@nextui-org/react";
 import { Center, useDisclosure } from "@chakra-ui/react";
 import Modal from "./Modal2";
+import { formatNumber } from "../Pages/FormatString";
 
 const ProductOverview = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const ProductOverview = () => {
   });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [specs, setSpecs] = useState([]);
+  //   const [specs, setSpecs] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -35,21 +36,6 @@ const ProductOverview = () => {
     setModalOpen(false);
     setSelectedImage(null);
   };
-
-  useEffect(() => {
-    // Example API response
-    // const apiResponse = "Rated Output Power: 1000W Battery Support: Li-ion and Lead-Acid (12 Vd.c.) Maximum PV Charging Current: 30A Maximum PV Array Power: 400W (PWM) Efficient Solar Energy Conversion: Wide input voltage range Quiet Operation: <45 dB Protection: IP20 enclosure Warranty: 2 years";
-
-    // Split the response into key-value pairs
-    const specsArray = product?.text_specifications
-      .split(/(?=\b[A-Z])/)
-      .map((item) => {
-        const [label, value] = item.split(":").map((str) => str.trim());
-        return { label, value };
-      });
-
-    setSpecs(specsArray);
-  }, []);
 
   useEffect(() => {
     setLoading(true); // Start loading
@@ -196,7 +182,7 @@ const ProductOverview = () => {
             Category: {product?.category || "Unknown"}
           </p>
           <p className="text-gray-800 text-xl font-semibold mb-4">
-            N{product?.price || "N/A"}
+            N{formatNumber(product?.price) || "N/A"}
           </p>
           <p className="text-gray-700 mb-4">
             {product?.description || "No description available"}
@@ -316,8 +302,8 @@ const ProductOverview = () => {
       </div>
       {/* The Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
-          <div className="relative bg-white rounded-lg p-5 max-w-lg mx-auto">
+        <div className="fixed inset-0 bg-black z-[1000000000000] bg-opacity-75 w-full flex items-center justify-center">
+          <div className="relative bg-white rounded-lg max-w-full mx-auto h-screen">
             <span
               className="absolute top-4 right-4 text-gray-600 text-3xl cursor-pointer hover:text-gray-900"
               onClick={closeModal}

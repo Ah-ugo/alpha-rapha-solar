@@ -5,6 +5,7 @@ import solar1 from "../assets/solar_1.jpg";
 import solar2 from "../assets/solar_2.jpg";
 import { LoadAllProducts } from "../utils/Products";
 import { Center } from "@chakra-ui/react";
+import ProductCard2 from "./ProductCard2";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -74,7 +75,7 @@ export default function ProductList() {
         {/* </div> */}
 
         <div className="mx-4">
-          <div className="mt-10 grid lg:grid-cols-2 gap-x-8 gap-y-8 items-center">
+          <div className="mt-10 grid lg:grid-cols-4 grid-cols-1  gap-x-8 gap-y-8 items-center">
             {/* <ProductListCard
               img={
                 "https://solarstepza.co.za/cdn/shop/files/ecco-550W-SOLAR-PANEL_png_4bdbb790-bf4a-4531-b1c2-4992216b1593.webp?v=1728996623&width=360"
@@ -116,11 +117,15 @@ export default function ProductList() {
             /> */}
             {products.map((resp) => {
               return (
-                <ProductListCard
-                  img={resp.image_urls[0]}
+                <ProductCard2
+                  img_url={resp.image_urls[0]}
                   price={resp.price}
                   title={resp.title}
                   id={resp._id}
+                  descr={resp.description}
+                  category={resp.category}
+                  rating={resp.ratings}
+                  review={resp.reviews?.length}
                 />
               );
             })}

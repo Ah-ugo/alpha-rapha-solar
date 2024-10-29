@@ -1,4 +1,5 @@
 import React from "react";
+import { formatNumber } from "../Pages/FormatString";
 
 export default function ProductListCard({ title, img, price, id }) {
   return (
@@ -18,7 +19,7 @@ export default function ProductListCard({ title, img, price, id }) {
             </div>
             <div>
               <p className="group-hover:opacity-60 transition duration-500 text-xl font-semibold leading-5 text-gray-800">
-                N{price}
+                N{formatNumber(price)}
               </p>
             </div>
           </div>
