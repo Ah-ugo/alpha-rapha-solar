@@ -5,60 +5,7 @@ import Slider from "react-slick";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { LoadAllProducts } from "../utils/Products";
-
-const products = [
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  // More products...
-];
+import { formatNumber } from "../utils/FormatString";
 
 export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
@@ -166,6 +113,47 @@ export default function FeaturedProducts() {
     swipeToSlide: true,
     arrows: true,
     autoplay: true,
+    nextArrow: (
+      <div>
+        <div className="next-slick-arrow text-gray-700">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </div>
+      </div>
+    ),
+
+    prevArrow: (
+      <div>
+        <div className="next-slick-arrow text-gray-700">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </div>
+      </div>
+    ),
     responsive: [
       {
         breakpoint: 1024,
@@ -202,68 +190,70 @@ export default function FeaturedProducts() {
     // widt
   };
   return (
-    <div className="bg-blue-900">
+    <div className="">
       <div className="mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <Center
-          flexDirection={"column"}
-          className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20"
-        >
-          {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+        <div className="mx-auto px-4 py-16 bg-blue-900 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+          <Center
+            flexDirection={"column"}
+            className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20"
+          >
+            {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Customers also purchased
           </h2> */}
-          <motion.span
-            initial={{
-              opacity: 0,
-              // if odd index card,slide from right instead of left
-              y: 1 % 2 === 0 ? 50 : -50,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0, // Slide in to its original position
-              transition: {
-                duration: 1, // Animation duration
-              },
-            }}
-            className="mb-2 block text-lg font-semibold text-gray-300"
-          >
-            Our Products
-          </motion.span>
-          <motion.h2
-            initial={{
-              opacity: 0,
-              // if odd index card,slide from right instead of left
-              y: 1 % 2 === 0 ? 50 : -50,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0, // Slide in to its original position
-              transition: {
-                duration: 1, // Animation duration
-              },
-            }}
-            className="mb-3 text-3xl font-bold leading-[1.2] text-white sm:text-4xl md:text-[40px]"
-          >
-            Featured Products
-          </motion.h2>
-          <motion.p
-            initial={{
-              opacity: 0,
-              // if odd index card,slide from right instead of left
-              y: 1 % 2 === 0 ? 50 : -50,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0, // Slide in to its original position
-              transition: {
-                duration: 1, // Animation duration
-              },
-            }}
-            className="text-base text-gray-300"
-          >
-            There are many variations of passages of Lorem Ipsum available but
-            the majority have suffered alteration in some form.
-          </motion.p>
-        </Center>
+            <motion.span
+              initial={{
+                opacity: 0,
+                // if odd index card,slide from right instead of left
+                y: 1 % 2 === 0 ? 50 : -50,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0, // Slide in to its original position
+                transition: {
+                  duration: 1, // Animation duration
+                },
+              }}
+              className="mb-2 block text-lg font-semibold text-gray-300"
+            >
+              Our Products
+            </motion.span>
+            <motion.h2
+              initial={{
+                opacity: 0,
+                // if odd index card,slide from right instead of left
+                y: 1 % 2 === 0 ? 50 : -50,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0, // Slide in to its original position
+                transition: {
+                  duration: 1, // Animation duration
+                },
+              }}
+              className="mb-3 text-3xl font-bold leading-[1.2] text-white sm:text-4xl md:text-[40px]"
+            >
+              Featured Products
+            </motion.h2>
+            <motion.p
+              initial={{
+                opacity: 0,
+                // if odd index card,slide from right instead of left
+                y: 1 % 2 === 0 ? 50 : -50,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0, // Slide in to its original position
+                transition: {
+                  duration: 1, // Animation duration
+                },
+              }}
+              className="text-base text-gray-300"
+            >
+              There are many variations of passages of Lorem Ipsum available but
+              the majority have suffered alteration in some form.
+            </motion.p>
+          </Center>
+        </div>
         <div className="mt-6">
           {/* <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"> */}
           <Slider {...settings} className="gap-x-6 space-x-6">
@@ -294,7 +284,7 @@ export default function FeaturedProducts() {
                   </div>
                   <div className="mt-4 flex justify-between">
                     <div>
-                      <h3 className="text-sm text-gray-100">
+                      <h3 className="text-sm text-gray-700">
                         <a href={product?.href}>
                           <span
                             aria-hidden="true"
@@ -303,12 +293,12 @@ export default function FeaturedProducts() {
                           {product.title}
                         </a>
                       </h3>
-                      <p className="mt-1 text-sm text-gray-100">
+                      <p className="mt-1 text-sm text-gray-700">
                         {product?.color}
                       </p>
                     </div>
-                    <p className="text-sm font-medium text-gray-300">
-                      {product.price}
+                    <p className="text-sm font-medium text-gray-900">
+                      {formatNumber(product.price)}
                     </p>
                   </div>
                 </a>

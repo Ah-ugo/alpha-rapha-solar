@@ -14,6 +14,7 @@ import FeaturedProducts from "./components/FeaturedProducts";
 import Footeer from "./components/Footeer";
 import { Fab } from "react-tiny-fab";
 import { FaWhatsapp } from "react-icons/fa";
+import ProductCategories from "./components/ProductCategories";
 
 export default function App() {
   const [navbar, setNavbar] = useState(false);
@@ -54,8 +55,8 @@ export default function App() {
         autoplay
         controller={{
           initialSlide: 1,
-          slidingDuration: 500,
-          slidingDelay: 100,
+          slidingDuration: 100,
+          slidingDelay: 10,
           onSliding: (nextSlide) =>
             console.debug("onSliding(nextSlide): ", nextSlide),
           onBeforeSliding: (previousSlide, nextSlide) =>
@@ -178,6 +179,7 @@ export default function App() {
           </Overlay>
         </Slide>
       </HeroSlider>
+      <ProductCategories />
       <Service />
       <FeaturedProducts />
       <About1 />
