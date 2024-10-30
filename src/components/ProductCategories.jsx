@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProductCategories() {
   const navig = useNavigate();
   return (
-    <div className="pb-5">
+    <div className="pb-5 bg-white">
       <div className="flex justify-center items-center">
         <div className="2xl:mx-auto 2xl:container py-12 px-4 sm:px-6 xl:px-20 2xl:px-0 w-full">
           <div className="flex flex-col jusitfy-center items-center space-y-10">
