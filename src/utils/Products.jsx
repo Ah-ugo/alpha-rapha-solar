@@ -2,7 +2,9 @@ import axios from "axios";
 
 // Define primary and backup API URLs
 const API_URL_PRIMARY = "https://alpha-rapha-solar-backend.vercel.app";
-const API_URL_SECONDARY = "https://alpha-rapha-solar-backend.onrender.com";
+const API_URL_SECONDARY =
+  "https://alpha-raphasolar-ackend-ah-ugo5658-1fgg5dja.leapcell.dev";
+// const API_URL_SECONDARY = "https://alpha-rapha-solar-backend.onrender.com";
 
 // Helper function to make requests with fallback
 async function apiRequest(endpoint, options = {}) {

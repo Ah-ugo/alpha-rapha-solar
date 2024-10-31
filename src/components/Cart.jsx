@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import CartCard from "./CartCard";
 import { Context } from "../Context/mainContext";
 import { formatNumber } from "../utils/FormatString";
+import Swal from "sweetalert2";
+import { PaystackButton } from "react-paystack";
 
 export function Cart({ close }) {
   const { handleRemoveFromCart } = useContext(Context);
@@ -13,6 +15,37 @@ export function Cart({ close }) {
   });
 
   const [show, setShow] = useState(false);
+  const localeData = localStorage.getItem("alphrapha_details");
+  const parsedLocaleData = JSON.parse(localeData);
+  console.log(parsedLocaleData);
+  const amount = cartItems?.total + 30 + 35 * 1000; // Remember, set in kobo!
+  const email = parsedLocaleData?.email;
+  const name = parsedLocaleData?.full_name;
+  const [phone, setPhone] = useState("");
+
+  const componentProps = {
+    email: email,
+    amount: amount,
+    metadata: {
+      name: name,
+    },
+    publicKey: "pk_test_8f8736df30d72b3c427000bed14e1d5bf12e3b17",
+    text: "Checkout",
+    onSuccess: () => {
+      Swal.fire({
+        title: "Thank You!",
+        text: "Thanks for doing business with us! Come back soon!!",
+        icon: "success",
+      }),
+        window.location.replace("/listing");
+    },
+    onClose: () =>
+      Swal.fire({
+        title: "Please Don't Go",
+        text: "Wait! You need this product(s), don't go!!!!",
+        icon: "error",
+      }),
+  };
 
   // Sync cartItems state to localStorage whenever cartItems changes
   useEffect(() => {
@@ -141,12 +174,17 @@ export function Cart({ close }) {
                         {/* Shipping and Tax included */}
                       </p>
                     </div>
-                    <button
+                    <PaystackButton
+                      onClick={() => setShow(!show)}
+                      className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
+                      {...componentProps}
+                    />
+                    {/* <button
                       onClick={() => setShow(!show)}
                       className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
                     >
                       Checkout
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
