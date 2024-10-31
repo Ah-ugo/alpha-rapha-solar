@@ -63,7 +63,7 @@ const Service = () => {
                     duration: 1, // Animation duration
                   },
                 }}
-                className="text-base text-body-color dark:text-dark-6"
+                className="text-base text-body-color"
               >
                 There are many variations of passages of Lorem Ipsum available
                 but the majority have suffered alteration in some form.

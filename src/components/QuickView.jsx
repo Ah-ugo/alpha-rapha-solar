@@ -10,7 +10,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 
 /* Install pure-react-carousel using -> npm i pure-react-carousel */
 
-export default function Index() {
+export default function QuickView() {
   return (
     <div className="bg-gray-800">
       <div className="2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4">

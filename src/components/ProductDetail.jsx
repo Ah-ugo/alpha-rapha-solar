@@ -146,7 +146,7 @@ const ProductOverview = () => {
       {/* Product Header */}
       <div className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Product Image Carousel */}
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 mt-10">
           {product?.image_urls && product.image_urls?.length > 0 && (
             <Slider {...settings} className="w-full">
               {product.image_urls.map((imageUrl, index) => (
@@ -208,6 +208,14 @@ const ProductOverview = () => {
           >
             View PDF Specifications
           </a>
+          <div className="flex items-center mt-4 flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8  mb-4 ">
+            <button className="w-full md:w-3/5 border border-gray-800 text-base font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 text-white">
+              Add to Cart
+            </button>
+            <button className="w-full md:w-2/5 border border-gray-800 text-base font-medium leading-none text-gray-800 uppercase py-6 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 hover:bg-gray-800 hover:text-white">
+              Buy via Whatsapp
+            </button>
+          </div>
         </div>
       </div>
 

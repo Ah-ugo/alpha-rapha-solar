@@ -15,6 +15,7 @@ import Footeer from "./components/Footeer";
 import { Fab } from "react-tiny-fab";
 import { FaWhatsapp } from "react-icons/fa";
 import ProductCategories from "./components/ProductCategories";
+import SubServiceCards from "./components/SubServiceCards";
 
 export default function App() {
   const [navbar, setNavbar] = useState(false);
@@ -179,7 +180,7 @@ export default function App() {
           </Overlay>
         </Slide>
       </HeroSlider>
-      <ProductCategories />
+      <SubServiceCards />
       <Service />
       <FeaturedProducts />
       <About1 />
