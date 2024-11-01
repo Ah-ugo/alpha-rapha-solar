@@ -22,7 +22,7 @@ export default function Footeer() {
               }}
               class="text-2xl font-bold"
             >
-              Alpha<span class="text-blue-600">Rapha</span>.
+              Alpha<span class="text-blue-900">Rapha</span>.
             </motion.span>
           </div>
           <motion.div
@@ -85,27 +85,27 @@ export default function Footeer() {
           <nav aria-label="Footer Navigation" class="text-gray-500">
             <ul class="space-y-3">
               <li>
-                <a class="hover:text-blue-600 hover:underline" href="#">
+                <a class="hover:text-blue-900 hover:underline" href="#">
                   Pricing
                 </a>
               </li>
               <li>
-                <a class="hover:text-blue-600 hover:underline" href="#">
+                <a class="hover:text-blue-900 hover:underline" href="#">
                   Demo
                 </a>
               </li>
               <li>
-                <a class="hover:text-blue-600 hover:underline" href="#">
+                <a class="hover:text-blue-900 hover:underline" href="#">
                   Press
                 </a>
               </li>
               <li>
-                <a class="hover:text-blue-600 hover:underline" href="#">
+                <a class="hover:text-blue-900 hover:underline" href="#">
                   Support Hub
                 </a>
               </li>
               <li>
-                <a class="hover:text-blue-600 hover:underline" href="#">
+                <a class="hover:text-blue-900 hover:underline" href="#">
                   Contact
                 </a>
               </li>
@@ -137,7 +137,7 @@ export default function Footeer() {
                 class="focus:outline mb-2 block h-14 w-full rounded-xl bg-gray-200 px-4 sm:w-80 focus:outline-none focus:ring-1 focus:ring-blue-600"
                 placeholder="Enter your email"
               />
-              <button class="block rounded-xl bg-blue-600 px-6 py-3 font-medium text-white">
+              <button class="block rounded-xl bg-blue-900 px-6 py-3 font-medium text-white">
                 Subscribe
               </button>
             </div>

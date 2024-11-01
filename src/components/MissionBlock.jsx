@@ -3,7 +3,7 @@ import React from "react";
 export default function MissionBlock() {
   return (
     <section class="pb-16 pt-10">
-      <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="container mx-auto px-4">
         <h2 class="text-3xl text-center font-extrabold text-gray-900">
           Our Vision
         </h2>

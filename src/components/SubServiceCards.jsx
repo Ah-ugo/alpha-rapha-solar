@@ -22,7 +22,7 @@ export default function SubServiceCards() {
                   duration: 1, // Animation duration
                 },
               }}
-              className="mb-2 block text-lg font-semibold text-primary"
+              className="mb-2 block text-lg font-semibold text-blue-900"
             >
               Our Product Categories
             </motion.span>
@@ -78,7 +78,7 @@ export default function SubServiceCards() {
                 />
               </div>
               <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-indigo-600 mb-4 text-xl font-bold">
+                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
                   Inverters
                 </h5>
                 <p class="mb-8 text-gray-600">
@@ -88,7 +88,7 @@ export default function SubServiceCards() {
                 <div class="flex justify-between">
                   <a
                     href="/store"
-                    class="group text-lg font-bold focus:text-indigo-600 hover:text-indigo-600"
+                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
                   >
                     {/* <span>▷</span> */}
                     <span class="underline">Shop Now</span>
@@ -112,7 +112,7 @@ export default function SubServiceCards() {
                 />
               </div>
               <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-indigo-600 mb-4 text-xl font-bold">
+                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
                   Charge Controllers
                 </h5>
                 <p class="mb-8 text-gray-600">
@@ -122,7 +122,7 @@ export default function SubServiceCards() {
                 <div class="flex justify-between">
                   <a
                     href="/store"
-                    class="group text-lg font-bold focus:text-indigo-600 hover:text-indigo-600"
+                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
                   >
                     {/* <span>▷</span> */}
                     <span class="underline">Shop Now</span>
@@ -146,7 +146,7 @@ export default function SubServiceCards() {
                 />
               </div>
               <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-indigo-600 mb-4 text-xl font-bold">
+                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
                   Lithium Batteries
                 </h5>
                 <p class="mb-8 text-gray-600">
@@ -156,7 +156,7 @@ export default function SubServiceCards() {
                 <div class="flex justify-between">
                   <a
                     href="/store"
-                    class="group text-lg font-bold focus:text-indigo-600 hover:text-indigo-600"
+                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
                   >
                     {/* <span>▷</span> */}
                     <span class="underline">Shop Now</span>
@@ -180,7 +180,7 @@ export default function SubServiceCards() {
                 />
               </div>
               <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-indigo-600 mb-4 text-xl font-bold">
+                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
                   Solar Street Light
                 </h5>
                 <p class="mb-8 text-gray-600">
@@ -190,7 +190,7 @@ export default function SubServiceCards() {
                 <div class="flex justify-between">
                   <a
                     href="/store"
-                    class="group text-lg font-bold focus:text-indigo-600 hover:text-indigo-600"
+                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
                   >
                     {/* <span>▷</span> */}
                     <span class="underline">Shop Now</span>
@@ -214,7 +214,7 @@ export default function SubServiceCards() {
                 />
               </div>
               <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-indigo-600 mb-4 text-xl font-bold">
+                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
                   Solar Panel
                 </h5>
                 <p class="mb-8 text-gray-600">
@@ -224,7 +224,7 @@ export default function SubServiceCards() {
                 <div class="flex justify-between">
                   <a
                     href="/store"
-                    class="group text-lg font-bold focus:text-indigo-600 hover:text-indigo-600 flex items-center gap-2"
+                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900 flex items-center gap-2"
                   >
                     {/* <span><BiCart size={30} /></span> */}
                     <span class="underline">Shop Now</span>

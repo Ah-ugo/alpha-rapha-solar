@@ -7,7 +7,7 @@ const About1 = () => {
   return (
     <>
       <section className="overflow-hidden px-4 pt-5 pb-5 lg:pt-5 lg:pb-5 bg-white">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-between -mx-4">
             <div className="w-full px-4 lg:w-6/12">
               <div className="flex items-center -mx-3 sm:-mx-4">
@@ -599,7 +599,7 @@ const About1 = () => {
 
             <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
               <div className="mt-10 lg:mt-0">
-                <span className="block mb-4 text-lg font-semibold text-primary">
+                <span className="block mb-4 text-lg font-semibold text-blue-900">
                   Why Choose Us
                 </span>
                 <h2 className="mb-5 text-3xl font-bold text-dark dark:text-white sm:text-[40px]/[48px]">
@@ -617,7 +617,7 @@ const About1 = () => {
                 </p>
                 <a
                   href="javascript:void(0)"
-                  className="inline-flex items-center justify-center py-3 text-base font-medium text-center text-white border border-transparent rounded-md px-7 bg-primary hover:bg-opacity-90"
+                  className="inline-flex items-center justify-center py-3 text-base font-medium text-center text-white border border-transparent rounded-md px-7 bg-blue-900 hover:bg-opacity-90"
                 >
                   Get Started
                 </a>
