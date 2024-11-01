@@ -16,6 +16,7 @@ import { Fab } from "react-tiny-fab";
 import { FaWhatsapp } from "react-icons/fa";
 import ProductCategories from "./components/ProductCategories";
 import SubServiceCards from "./components/SubServiceCards";
+import MissionBlock from "./components/MissionBlock";
 
 export default function App() {
   const [navbar, setNavbar] = useState(false);
@@ -184,6 +185,7 @@ export default function App() {
       <Service />
       <FeaturedProducts />
       <About1 />
+      <MissionBlock />
       <Reviews />
       <Footeer />
       <Fab
