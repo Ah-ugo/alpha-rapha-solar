@@ -70,7 +70,7 @@ export default function SubServiceCards() {
         <div class="gap-12 mt-10 grid grid-cols-1 sm:mt-16 sm:grid-cols-2 md:grid-cols-3 xl:mt-24">
           <div class="mx-auto max-w-screen-xl">
             <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4">
+            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
               <div class="flex h-60 flex-col justify-between overflow-hidden">
                 <img
                   src="http://res.cloudinary.com/dejeplzpv/image/upload/v1730155721/shops/hm0azk6sbjns7ydkorvl.webp"
@@ -104,7 +104,7 @@ export default function SubServiceCards() {
 
           <div class="mx-auto max-w-screen-xl">
             <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4">
+            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
               <div class="flex h-60 flex-col justify-between overflow-hidden">
                 <img
                   src="http://res.cloudinary.com/dejeplzpv/image/upload/v1729780532/shops/sy8xng4ycbx8oje8oc09.webp"
@@ -138,7 +138,7 @@ export default function SubServiceCards() {
 
           <div class="mx-auto max-w-screen-xl">
             <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4">
+            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
               <div class="flex h-60 flex-col justify-between overflow-hidden">
                 <img
                   src="https://ueeshop.ly200-cdn.com/u_file/UPAZ/UPAZ775/2311/15/products/01-d389.jpg?x-oss-process=image/format,webp/quality,q_100/resize,m_lfit,h_500,w_500"
@@ -172,7 +172,7 @@ export default function SubServiceCards() {
 
           <div class="mx-auto max-w-screen-xl">
             <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4">
+            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
               <div class="flex h-60 flex-col justify-between overflow-hidden">
                 <img
                   src="http://res.cloudinary.com/dejeplzpv/image/upload/v1729780471/shops/xvsaioxifajgtqdyyrqz.webp"
@@ -206,7 +206,7 @@ export default function SubServiceCards() {
 
           <div class="mx-auto max-w-screen-xl">
             <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4">
+            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
               <div class="flex h-60 flex-col justify-between overflow-hidden">
                 <img
                   src="http://res.cloudinary.com/dejeplzpv/image/upload/v1729780220/shops/tezufktdoxewn89dvpqq.webp"

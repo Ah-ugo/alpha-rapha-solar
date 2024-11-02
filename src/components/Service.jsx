@@ -63,7 +63,7 @@ const Service = () => {
                     duration: 1, // Animation duration
                   },
                 }}
-                className="text-base text-body-color"
+                className="text-base text-body-color px-4"
               >
                 There are many variations of passages of Lorem Ipsum available
                 but the majority have suffered alteration in some form.
@@ -72,7 +72,7 @@ const Service = () => {
           </div>
         </div>
 
-        <div className="-mx-4 flex flex-wrap">
+        <div className="mx-4 sm:-mx-4 flex flex-wrap">
           <ServiceCard
             title="Solar Panel Sales"
             details="Get premium solar panels designed to harness the power of the sun efficiently. Choose from a wide range of solar solutions tailored to meet your energy needs."
@@ -129,7 +129,7 @@ const ServiceCard = ({ icon, title, details }) => {
         }}
         className="w-full px-4 md:w-1/2 lg:w-1/3"
       >
-        <div className="mb-9 rounded-[20px] bg-white p-10 shadow-2 hover:shadow-lg  md:px-7 xl:px-10">
+        <div className="mb-9 rounded-[20px] bg-white p-10 shadow-2 hover:shadow-lg  md:px-7 xl:px-10 duration-200 hover:-translate-y-4">
           <div className="mb-8 flex h-[70px] w-[70px] items-center justify-center rounded-2xl bg-blue-900">
             {icon}
           </div>
