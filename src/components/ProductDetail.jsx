@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import { AddReview, GetProductById } from "../utils/Products";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt, FaRegStar, FaWhatsapp } from "react-icons/fa";
 import ModalWrapper from "./ModalWrapper";
 // import { useDisclosure } from "@nextui-org/react";
-import { Center, useDisclosure } from "@chakra-ui/react";
+import { Center, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import Modal from "./Modal2";
 import { formatNumber } from "../utils/FormatString";
+import { Context } from "../Context/mainContext";
 
 const ProductOverview = () => {
   const { id } = useParams();
@@ -26,6 +27,7 @@ const ProductOverview = () => {
   //   const [specs, setSpecs] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const { handleAddToCart } = useContext(Context);
 
   const openModal = (imageSrc) => {
     setSelectedImage(imageSrc);
@@ -35,6 +37,16 @@ const ProductOverview = () => {
   const closeModal = () => {
     setModalOpen(false);
     setSelectedImage(null);
+  };
+
+  const openWhatsApp = () => {
+    const phoneNumber = "+2347038122409"; // Replace with the phone number you want to message
+    const message = `Hello, I'm interested in ${product.title}.`; // Optional: A default message
+
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappURL, "_blank"); // Open in a new tab
   };
 
   useEffect(() => {
@@ -209,11 +221,20 @@ const ProductOverview = () => {
             View PDF Specifications
           </a>
           <div className="flex items-center mt-4 flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8  mb-4 ">
-            <button className="w-full md:w-3/5 border border-gray-800 text-base font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 text-white">
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="w-full md:w-3/5 border border-blue-900 text-base font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-blue-900 text-white"
+            >
               Add to Cart
             </button>
-            <button className="w-full md:w-2/5 border border-gray-800 text-base font-medium leading-none text-gray-800 uppercase py-6 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 hover:bg-gray-800 hover:text-white">
-              Buy via Whatsapp
+            <button
+              onClick={() => openWhatsApp()}
+              className="w-full md:w-2/5 border border-green-700 gap-3 text-base font-medium leading-none text-gray-800 uppercase py-6 bg-transparent focus:outline-none focus:ring-2 flex justify-center items-center focus:ring-offset-2 focus:ring-gray-800 hover:bg-green-900 hover:text-white"
+            >
+              {/* <Flex> */}
+              <FaWhatsapp size={20} className="text-green-700" />
+              <Text>Buy via Whatsapp</Text>
+              {/* </Flex> */}
             </button>
           </div>
         </div>
