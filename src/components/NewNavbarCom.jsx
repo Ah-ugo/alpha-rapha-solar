@@ -89,7 +89,10 @@ const NewNavbar = ({ active, className }) => {
                   >
                     {path === "/"
                       ? "Home"
-                      : path.split("/")[1].replace("-", " ")}
+                      : path
+                          .split("/")[1]
+                          .replace("-", " ")
+                          .replace(/\b\w/g, (char) => char.toUpperCase())}
                   </a>
                 </li>
               )
