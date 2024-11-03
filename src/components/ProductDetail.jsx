@@ -8,10 +8,17 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaStar, FaStarHalfAlt, FaRegStar, FaWhatsapp } from "react-icons/fa";
 import ModalWrapper from "./ModalWrapper";
 // import { useDisclosure } from "@nextui-org/react";
-import { Center, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  // Breadcrumb,
+  Center,
+  Flex,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Modal from "./Modal2";
 import { formatNumber } from "../utils/FormatString";
 import { Context } from "../Context/mainContext";
+import Breadcrumb from "./BreadCrumb";
 
 const ProductOverview = () => {
   const { id } = useParams();
@@ -155,8 +162,16 @@ const ProductOverview = () => {
 
   return (
     <div className="container mx-auto p-6 mt-16">
+      <Breadcrumb
+        breadcrumbs={[
+          { label: "Shop", path: "/store" },
+          { label: "Product Detail", path: "#" },
+          // { label: 'Set 2', path: '' } // Active breadcrumb (no link)
+        ]}
+      />
+
       {/* Product Header */}
-      <div className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="flex mt-4 flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Product Image Carousel */}
         <div className="w-full md:w-1/2 mt-10">
           {product?.image_urls && product.image_urls?.length > 0 && (
