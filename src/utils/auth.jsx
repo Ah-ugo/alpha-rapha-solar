@@ -1,4 +1,6 @@
+import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 // Login function
 export async function LoginUser(formData, urls) {
@@ -55,4 +57,12 @@ export async function RegisterUser(formData, urls, storeToken = false) {
     }
   }
   throw new Error("All servers are down or unreachable");
+}
+
+// Logout function
+export function logoutUser() {
+  // Clear authentication tokens and user details from local storage
+  localStorage.removeItem("alpharapha_token");
+  localStorage.removeItem("alphrapha_details");
+  window.location.reload();
 }

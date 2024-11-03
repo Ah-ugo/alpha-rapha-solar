@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Logo from "../assets/logo3-1.png";
 
 export default function Footeer() {
   return (
@@ -22,7 +23,9 @@ export default function Footeer() {
               }}
               class="text-2xl font-bold"
             >
-              Alpha<span class="text-blue-900">Rapha</span>.
+              <a href="javascript:void(0)">
+                <img src={Logo} alt="logo" className="sm:w-28 w-28" />
+              </a>
             </motion.span>
           </div>
           <motion.div

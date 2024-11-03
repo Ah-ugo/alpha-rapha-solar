@@ -17,6 +17,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import ProductCategories from "./components/ProductCategories";
 import SubServiceCards from "./components/SubServiceCards";
 import MissionBlock from "./components/MissionBlock";
+import NewNavbar from "./components/NewNavbarCom";
 
 export default function App() {
   const [navbar, setNavbar] = useState(false);
@@ -50,7 +51,8 @@ export default function App() {
   return (
     <div className="w-full overflow-x-hidden">
       {/* fgdcj */}
-      <NavbarCom active={navbar} />
+      {/* <NavbarCom active={navbar} /> */}
+      <NewNavbar active={navbar} />
       <HeroSlider
         width={"100vw"}
         height={"100vh"}

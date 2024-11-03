@@ -1,125 +1,215 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation
+import Logo from "../assets/logo3-1.png";
 import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
-  Link,
-  Button,
-  //   useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { Context } from "../Context/mainContext";
+import { logoutUser } from "../utils/auth";
+import {
+  Avatar,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@nextui-org/react";
-import { useDisclosure } from "@chakra-ui/react";
-// import { AcmeLogo } from "./AcmeLogo.jsx";
+import ModalWrapper from "./ModalWrapper";
+import { Cart } from "./Cart";
 
-export default function NewNavbarCom({ active, className }) {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const NewNavbar = ({ active, className }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {
+    isOpen: isOpenModal1,
+    onOpen: onOpenModal1,
+    onClose: onCloseModal1,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenModal2,
+    onOpen: onOpenModal2,
+    onClose: onCloseModal2,
+  } = useDisclosure();
+
+  const { cart } = useContext(Context);
+  const location = useLocation(); // Get current location
+
   const localeData = localStorage.getItem("alphrapha_details");
   const parsedLocaleData = JSON.parse(localeData);
-  console.log(parsedLocaleData);
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+  const handleToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <Navbar
-      onMenuOpenChange={setIsMenuOpen}
+    <header
       className={
         !active
           ? className
             ? className
-            : "shadow fixed z-50 w-full top-0 bg-white/20 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
-          : "shadow fixed z-50 w-full top-0 bg-blue-900 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
+            : "shadow fixed z-50 px-10 w-full top-0 bg-white/20 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
+          : "shadow fixed z-50 px-10 w-full top-0 bg-blue-900 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
       }
     >
-      <NavbarContent>
-        <NavbarBrand>
-          {/* <AcmeLogo />
-          <p className="font-bold text-inherit">ACME</p> */}
-          <span className="mr-2 text-4xl text-blue-600">
+      <div className="flex sm:flex-wrap items-center lg:gap-y-2 gap-4 w-full">
+        <a href="javascript:void(0)">
+          <img src={Logo} alt="logo" className="sm:w-28 w-28" />
+        </a>
+
+        <div
+          className={`lg:ml-60 ${
+            isMenuOpen ? "block" : "hidden"
+          } lg:block max-lg:before:fixed max-lg:before:bg-black max-lg:h-screen max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50`}
+        >
+          <button
+            onClick={handleToggle}
+            className="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white p-3"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              role="img"
-              width="1em"
-              height="1em"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 24 24"
+              className="w-4 fill-black"
+              viewBox="0 0 320.591 320.591"
             >
-              <path
-                fill="currentColor"
-                d="M6.925 16.875Q5.2 16.225 4.1 14.713Q3 13.2 3 11.25q0-1.975.938-3.513Q4.875 6.2 6 5.15q1.125-1.05 2.062-1.6L9 3v2.475q0 .625.45 1.062q.45.438 1.075.438q.35 0 .65-.15q.3-.15.5-.425L12 6q.95.55 1.625 1.35t1.025 1.8l-1.675 1.675q-.05-.6-.287-1.175q-.238-.575-.638-1.05q-.35.2-.738.287q-.387.088-.787.088q-1.1 0-1.987-.612Q7.65 7.75 7.25 6.725q-.95.925-1.6 2.062Q5 9.925 5 11.25q0 .775.275 1.462q.275.688.75 1.213q.05-.5.287-.938q.238-.437.588-.787L9 10.1l2.15 2.1q.05.05.1.125t.1.125l-1.425 1.425q-.05-.075-.087-.125q-.038-.05-.088-.1L9 12.925l-.7.7q-.125.125-.212.287q-.088.163-.088.363q0 .3.175.537q.175.238.45.363ZM9 10.1Zm0 0ZM7.4 22L6 20.6L19.6 7L21 8.4L17.4 12H21v2h-5.6l-.5.5l1.5 1.5H21v2h-2.6l2.1 2.1l-1.4 1.4l-2.1-2.1V22h-2v-4.6l-1.5-1.5l-.5.5V22h-2v-3.6Z"
-              />
+              <path d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"></path>
+              <path d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"></path>
             </svg>
-          </span>
-          <span className="text-gray-50">Alpha-Rapha Solar</span>
-        </NavbarBrand>
-      </NavbarContent>
+          </button>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
-      </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full"
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
-    </Navbar>
+          <ul
+            className="lg:flex lg:gap-x-3 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-screen max-lg:shadow-md max-lg:overflow-auto"
+            style={{ zIndex: 5000000000000 }}
+          >
+            <li className="mb-6 hidden max-lg:block">
+              <a href="javascript:void(0)">
+                <img src={Logo} alt="logo" className="w-36" />
+              </a>
+            </li>
+            <li className="max-lg:border-b max-lg:py-3 px-3">
+              <a
+                href="/"
+                className={`text-[15px] block font-semibold ${
+                  location.pathname === "/" ? "text-[#007bff]" : "text-[#fff]"
+                }`}
+              >
+                Home
+              </a>
+            </li>
+            <li className="max-lg:border-b max-lg:py-3 px-3">
+              <a
+                href="/store"
+                className={`text-[15px] block font-semibold ${
+                  location.pathname === "/store"
+                    ? "text-[#007bff]"
+                    : "text-[#fff]"
+                }`}
+              >
+                Shop
+              </a>
+            </li>
+            <li className="max-lg:border-b max-lg:py-3 px-3">
+              <a
+                href="javascript:void(0)"
+                className={`text-[15px] block font-semibold ${
+                  location.pathname === "/solar-panels"
+                    ? "text-[#007bff]"
+                    : "text-[#fff]"
+                }`}
+              >
+                Solar Panels
+              </a>
+            </li>
+            <li className="max-lg:border-b max-lg:py-3 px-3">
+              <a
+                href="javascript:void(0)"
+                className={`text-[15px] block font-semibold ${
+                  location.pathname === "/inverters"
+                    ? "text-[#007bff]"
+                    : "text-[#fff]"
+                }`}
+              >
+                Inverters
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex gap-x-6 gap-y-4 ml-auto">
+          <div className="flex items-center space-x-8">
+            <span class="relative" onClick={onOpenModal2}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20px"
+                height="20px"
+                class="cursor-pointer fill-[#fff] inline"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M164.96 300.004h.024c.02 0 .04-.004.059-.004H437a15.003 15.003 0 0 0 14.422-10.879l60-210a15.003 15.003 0 0 0-2.445-13.152A15.006 15.006 0 0 0 497 60H130.367l-10.722-48.254A15.003 15.003 0 0 0 105 0H15C6.715 0 0 6.715 0 15s6.715 15 15 15h77.969c1.898 8.55 51.312 230.918 54.156 243.71C131.184 280.64 120 296.536 120 315c0 24.812 20.188 45 45 45h272c8.285 0 15-6.715 15-15s-6.715-15-15-15H165c-8.27 0-15-6.73-15-15 0-8.258 6.707-14.977 14.96-14.996zM477.114 90l-51.43 180H177.032l-40-180zM150 405c0 24.813 20.188 45 45 45s45-20.188 45-45-20.188-45-45-45-45 20.188-45 45zm45-15c8.27 0 15 6.73 15 15s-6.73 15-15 15-15-6.73-15-15 6.73-15 15-15zm167 15c0 24.813 20.188 45 45 45s45-20.188 45-45-20.188-45-45-45-45 20.188-45 45zm45-15c8.27 0 15 6.73 15 15s-6.73 15-15 15-15-6.73-15-15 6.73-15 15-15zm0 0"
+                  data-original="#000000"
+                ></path>
+              </svg>
+              <span class="absolute left-auto -ml-1 top-0 rounded-full bg-red-500 px-1 py-0 text-xs text-white">
+                {cart.products.length}
+              </span>
+            </span>
+            {/* </span> */}
+            <ModalWrapper isOpen={isOpenModal1} onClose={onCloseModal1} />
+
+            {!localeData ? (
+              <button
+                onClick={onOpenModal1}
+                className="rounded-md border-2 border-gray-300 px-6 py-1 font-medium text-gray-300 transition-colors hover:bg-blue-600 hover:text-white"
+              >
+                Login
+              </button>
+            ) : (
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <Avatar
+                    isBordered
+                    as="button"
+                    color="secondary"
+                    name={parsedLocaleData?.full_name}
+                    size="sm"
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">{parsedLocaleData?.email}</p>
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={logoutUser}
+                    key="logout"
+                    color="danger"
+                  >
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            )}
+          </div>
+        </div>
+      </div>
+      <Drawer
+        size={"xl"}
+        isOpen={isOpenModal2}
+        placement="right"
+        onClose={onCloseModal2}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody>
+            <Cart close={onCloseModal2} />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </header>
   );
-}
+};
+
+export default NewNavbar;

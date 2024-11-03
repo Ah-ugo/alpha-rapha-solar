@@ -4,24 +4,32 @@ import { Context } from "../Context/mainContext";
 import { formatNumber } from "../utils/FormatString";
 import Swal from "sweetalert2";
 import { PaystackButton } from "react-paystack";
+import { createOrder } from "../utils/Products";
+import { useDisclosure } from "@chakra-ui/react"; // Ensure this is imported
+import ModalWrapper from "./ModalWrapper"; // Ensure you import your ModalWrapper
 
 export function Cart({ close }) {
   const { handleRemoveFromCart } = useContext(Context);
 
-  // Initialize cart from localStorage or set a default structure
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = JSON.parse(localStorage.getItem("rapha-solarcart"));
     return savedCart ? savedCart : { products: [], total: 0 };
   });
 
-  const [show, setShow] = useState(false);
+  const {
+    isOpen: isOpenModal1,
+    onOpen: onOpenModal1,
+    onClose: onCloseModal1,
+  } = useDisclosure();
   const localeData = localStorage.getItem("alphrapha_details");
   const parsedLocaleData = JSON.parse(localeData);
-  console.log(parsedLocaleData);
-  const amount = cartItems?.total + 30 + 35 * 1000; // Remember, set in kobo!
+  const totalAmount = cartItems?.total + 30 + 35;
+  const amount = totalAmount * 100; // Amount in kobo
   const email = parsedLocaleData?.email;
   const name = parsedLocaleData?.full_name;
-  const [phone, setPhone] = useState("");
+
+  // State to manage whether to proceed with the payment
+  const [canProceed, setCanProceed] = useState(false);
 
   const componentProps = {
     email: email,
@@ -32,12 +40,48 @@ export function Cart({ close }) {
     publicKey: "pk_test_8f8736df30d72b3c427000bed14e1d5bf12e3b17",
     text: "Checkout",
     onSuccess: () => {
+      function pushOrder() {
+        const items = cartItems.products.map((item) => {
+          return {
+            product_id: item._id, // Ensure this ID is being mapped correctly
+            quantity: item.quantity, // Keep this as it is
+            title: item.title, // Keep this as it is
+            price: item.price, // Keep this as it is
+          };
+        });
+
+        // Log the items for debugging
+        console.log("Order Items:", items); // Check if product_id is present
+
+        const pushed = {
+          items: items, // The final payload
+        };
+
+        // Debugging: Log the payload before making the request
+        console.log("Order Data:", JSON.stringify(pushed, null, 2)); // Log formatted JSON for easier reading
+
+        createOrder(pushed)
+          .then((response) => {
+            console.log("Order created successfully:", response);
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.error("Error response data:", error.response.data);
+              console.error("Error response status:", error.response.status);
+            } else if (error.request) {
+              console.error("No response received:", error.request);
+            } else {
+              console.error("Error message:", error.message);
+            }
+          });
+      }
+
+      pushOrder();
       Swal.fire({
         title: "Thank You!",
         text: "Thanks for doing business with us! Come back soon!!",
         icon: "success",
-      }),
-        window.location.replace("/listing");
+      });
     },
     onClose: () =>
       Swal.fire({
@@ -47,34 +91,33 @@ export function Cart({ close }) {
       }),
   };
 
-  // Sync cartItems state to localStorage whenever cartItems changes
   useEffect(() => {
     localStorage.setItem("rapha-solarcart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Function to handle removal of a product
   const handleRemoval = (product) => {
-    // Filter out the product using its unique _id
     const updatedProducts = cartItems.products.filter(
       (item) => item._id !== product._id
     );
 
-    // Calculate the new total by summing the prices of the remaining products
     const updatedTotal = updatedProducts.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
 
-    // Update local state
     setCartItems({ products: updatedProducts, total: updatedTotal });
-
-    // Call the context method to handle removal
     handleRemoveFromCart(product);
+  };
 
-    // Debugging statements
-    console.log("Removed product:", product);
-    console.log("Updated products:", updatedProducts);
-    console.log("New total:", updatedTotal);
+  // Checkout handler
+  const handleCheckout = () => {
+    if (!parsedLocaleData) {
+      // If user details are not found, open the modal
+      onOpenModal1();
+      setCanProceed(false); // Do not proceed with payment
+    } else {
+      setCanProceed(true); // Proceed with payment
+    }
   };
 
   return (
@@ -120,7 +163,7 @@ export function Cart({ close }) {
                 {cartItems.products.length > 0 ? (
                   cartItems.products.map((product) => (
                     <CartCard
-                      key={product._id} // Ensure each product has a unique ID
+                      key={product._id}
                       quantity={product.quantity}
                       price={product.price}
                       title={product.title}
@@ -170,21 +213,22 @@ export function Cart({ close }) {
                         Total
                       </p>
                       <p className="text-2xl font-bold leading-normal text-right text-gray-800">
-                        ₦{formatNumber(cartItems.total + 30 + 35)}{" "}
-                        {/* Shipping and Tax included */}
+                        ₦{formatNumber(cartItems.total + 30 + 35)}
                       </p>
                     </div>
-                    <PaystackButton
-                      onClick={() => setShow(!show)}
-                      className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-                      {...componentProps}
-                    />
-                    {/* <button
-                      onClick={() => setShow(!show)}
-                      className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-                    >
-                      Checkout
-                    </button> */}
+                    {parsedLocaleData ? (
+                      <PaystackButton
+                        className="text-base leading-none w-full py-5 bg-blue-900 border-blue-900 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 text-white"
+                        {...componentProps}
+                      />
+                    ) : (
+                      <button
+                        onClick={handleCheckout}
+                        className="text-base leading-none w-full py-5 bg-blue-900 border-blue-900 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 text-white"
+                      >
+                        Checkout
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -192,6 +236,9 @@ export function Cart({ close }) {
           </div>
         </div>
       </div>
+
+      {/* Modal for user details */}
+      <ModalWrapper isOpen={isOpenModal1} onClose={onCloseModal1} />
     </>
   );
 }

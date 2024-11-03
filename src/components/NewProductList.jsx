@@ -7,6 +7,7 @@ import NavbarCom from "./NavbarCom";
 import Footeer from "./Footeer";
 import { Fab } from "react-tiny-fab";
 import { FaWhatsapp } from "react-icons/fa";
+import NewNavbar from "./NewNavbarCom";
 
 const NewProductList = () => {
   const [products, setProducts] = useState([]);
@@ -69,9 +70,14 @@ const NewProductList = () => {
   });
   return (
     <div>
-      <NavbarCom
+      {/* <NavbarCom
         className={
           "shadow fixed z-50 w-full top-0 bg-blue-900 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
+        }
+      /> */}
+      <NewNavbar
+        className={
+          "shadow fixed px-4 z-50 w-full top-0 bg-blue-900 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
         }
       />
       <div class="relative mt-28 mb-10 lg:max-w-xl max-w-full mx-4 lg:mx-auto">

@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // Define primary and backup API URLs
-const API_URL_PRIMARY = "https://alpha-rapha-solar-backend.vercel.app";
+const API_URL_PRIMARY =
+  "https://alpha-raphasolar-ackend-ah-ugo5658-1fgg5dja.leapcell.dev";
 const API_URL_SECONDARY =
   "https://alpha-raphasolar-ackend-ah-ugo5658-1fgg5dja.leapcell.dev";
 // const API_URL_SECONDARY = "https://alpha-rapha-solar-backend.onrender.com";
@@ -14,6 +15,7 @@ async function apiRequest(endpoint, options = {}) {
       ...options,
       url: `${API_URL_PRIMARY}${endpoint}`,
     });
+    console.log(response.data, "reli===");
     return response.data;
   } catch (primaryError) {
     console.error("Primary API failed, attempting secondary:", primaryError);
@@ -23,6 +25,7 @@ async function apiRequest(endpoint, options = {}) {
         ...options,
         url: `${API_URL_SECONDARY}${endpoint}`,
       });
+      console.log(response.data, "aurtho");
       return response.data;
     } catch (secondaryError) {
       console.error("Secondary API also failed:", secondaryError);
@@ -54,3 +57,16 @@ export async function AddReview(input, id) {
     data: input,
   });
 }
+
+export const createOrder = async (input) => {
+  const token = localStorage.getItem("alpharapha_token");
+  return await apiRequest(`/orders/`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    data: input,
+  });
+};

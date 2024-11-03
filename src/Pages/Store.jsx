@@ -4,6 +4,7 @@ import NavbarCom from "../components/NavbarCom";
 import Footeer from "../components/Footeer";
 import { Fab } from "react-tiny-fab";
 import { FaWhatsapp } from "react-icons/fa";
+import NewNavbar from "../components/NewNavbarCom";
 
 export default function Store() {
   const openWhatsApp = () => {
@@ -17,11 +18,12 @@ export default function Store() {
   };
   return (
     <div>
-      <NavbarCom
+      {/* <NavbarCom
         className={
           "shadow fixed z-50 w-full top-0 bg-blue-900 border-white/50 focus-within:ring-1 backdrop-blur-md transition-all duration-1000 ease-in-out"
         }
-      />
+      /> */}
+      <NewNavbar />
       <ProductList />
       <Footeer />
       <Fab

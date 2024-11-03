@@ -16,8 +16,8 @@ export default function ModalWrapper({ isOpen, onClose }) {
   const [loading, setLoading] = useState(false);
 
   const urls = [
-    "https://alpha-rapha-solar-backend.vercel.app",
-    "https://alpha-rapha-solar-backend.onrender.com",
+    // "https://alpha-rapha-solar-backend.vercel.app",
+    // "https://alpha-rapha-solar-backend.onrender.com",
     "https://alpha-raphasolar-ackend-ah-ugo5658-1fgg5dja.leapcell.dev",
   ];
 
