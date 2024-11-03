@@ -133,7 +133,7 @@ export function Cart({ close }) {
           >
             <div className="flex md:flex-row flex-col justify-end" id="cart">
               <div
-                className="w-full md:pl-10 pl-4 pr-10 md:pr-4 md:py-12 py-8 bg-white overflow-y-auto overflow-x-hidden h-screen"
+                className="w-full md:pl-10 pl-4 pr-10 md:pr-4 md:py-12 py-8 bg-white overflow-y-auto overflow-x-hidden h-scree"
                 id="scroll"
               >
                 <div
