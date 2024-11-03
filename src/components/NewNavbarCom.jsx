@@ -177,7 +177,7 @@ const NewNavbar = ({ active, className }) => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerBody>
-            <Cart />
+            <Cart close={onCloseModal2} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

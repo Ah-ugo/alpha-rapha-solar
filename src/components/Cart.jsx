@@ -138,7 +138,7 @@ export function Cart({ close }) {
               >
                 <div
                   className="flex items-center text-gray-500 hover:text-gray-600 cursor-pointer"
-                  onClick={() => onCloseModal1()}
+                  onClick={() => close()}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
