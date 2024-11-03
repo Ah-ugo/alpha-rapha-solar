@@ -7,6 +7,7 @@ import { PaystackButton } from "react-paystack";
 import { createOrder } from "../utils/Products";
 import { useDisclosure } from "@chakra-ui/react"; // Ensure this is imported
 import ModalWrapper from "./ModalWrapper"; // Ensure you import your ModalWrapper
+import toast from "react-hot-toast";
 
 export function Cart({ close }) {
   const { handleRemoveFromCart } = useContext(Context);
@@ -63,15 +64,19 @@ export function Cart({ close }) {
         createOrder(pushed)
           .then((response) => {
             console.log("Order created successfully:", response);
+            toast.success("Order created successfully:", response);
           })
           .catch((error) => {
             if (error.response) {
               console.error("Error response data:", error.response.data);
               console.error("Error response status:", error.response.status);
+              toast.error("Error response status:", error.response.status);
             } else if (error.request) {
               console.error("No response received:", error.request);
+              toast.error("No response received:", error.request);
             } else {
               console.error("Error message:", error.message);
+              toast.error("Error message:", error.message);
             }
           });
       }
@@ -82,6 +87,7 @@ export function Cart({ close }) {
         text: "Thanks for doing business with us! Come back soon!!",
         icon: "success",
       });
+      window.location.replace("/store");
     },
     onClose: () =>
       Swal.fire({

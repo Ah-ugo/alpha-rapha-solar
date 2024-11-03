@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FiUser, FiMail, FiLock, FiEdit3 } from "react-icons/fi";
 import { LoginUser, RegisterUser } from "../utils/auth";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@chakra-ui/react";
+import toast from "react-hot-toast";
 
 export default function ModalWrapper({ isOpen, onClose }) {
   const [isRegister, setIsRegister] = useState(false);
@@ -70,7 +71,7 @@ export default function ModalWrapper({ isOpen, onClose }) {
 
         // Call RegisterUser with the prepared data
         await RegisterUser(registrationData, urls, true);
-        alert("Registered successfully!");
+        toast.success("Registered successfully!");
         toggleForm();
       } else {
         await LoginUser(
@@ -80,6 +81,7 @@ export default function ModalWrapper({ isOpen, onClose }) {
           }),
           urls
         );
+        toast.success("Login Successful!");
         onClose();
       }
     } catch (err) {
