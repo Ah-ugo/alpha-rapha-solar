@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Logo from "../assets/logo3-1.png";
+import { subscribeNewsLetters } from "../utils/aob";
+import toast from "react-hot-toast";
+import { Spinner } from "@chakra-ui/react";
+// import { useLoaderData } from "react-router-dom";
 
 export default function Footeer() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleEmailChange = (e) => setEmail(e.target.value);
+
+  const Subscribe = () => {
+    setLoading(true);
+    console.log(email, "email===");
+    subscribeNewsLetters(email)
+      .then((resp) => {
+        console.log(resp);
+        toast.success("Successfully subscribed to newsletter", resp);
+        setLoading(false);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.error("Error response data:", error.response.data);
+          console.error("Error response status:", error.response.status);
+          toast.error("Error response status: " + error.response.status);
+          setLoading(false);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+          toast.error("No response received: " + error.request);
+          setLoading(false);
+        } else {
+          console.error("Error message:", error.message);
+          toast.error("Error message: " + error.message);
+          setLoading(false);
+        }
+      });
+  };
+
   return (
     <footer class="bg-white">
       <div class="mx-auto grid max-w-screen-xl gap-y-8 gap-x-12 px-4 py-10 md:grid-cols-2 xl:grid-cols-4 xl:px-10">
@@ -137,11 +173,16 @@ export default function Footeer() {
             <div class="mb-4">
               <input
                 type="email"
+                value={email}
+                onChange={handleEmailChange}
                 class="focus:outline mb-2 block h-14 w-full rounded-xl bg-gray-200 px-4 sm:w-80 focus:outline-none focus:ring-1 focus:ring-blue-600"
                 placeholder="Enter your email"
               />
-              <button class="block rounded-xl bg-blue-900 px-6 py-3 font-medium text-white">
-                Subscribe
+              <button
+                onClick={Subscribe}
+                class="block rounded-xl bg-blue-900 px-6 py-3 font-medium text-white"
+              >
+                {loading ? <Spinner color="white" size={"md"} /> : "Subscribe"}
               </button>
             </div>
           </div>

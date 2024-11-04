@@ -200,22 +200,24 @@ const NewProductList = () => {
             Available Products
           </h2> */}
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((resp) => {
-              return (
-                <NewProductCard
-                  key={resp._id}
-                  img={resp.image_urls[0]}
-                  price={resp.price}
-                  title={resp.title}
-                  id={resp._id}
-                  descr={resp.description}
-                  category={resp.category}
-                  rating={resp.ratings}
-                  review={resp.reviews?.length}
-                  onClick={() => handleAddToCart(resp)}
-                />
-              );
-            })}
+            {filteredProducts
+              .map((resp) => {
+                return (
+                  <NewProductCard
+                    key={resp._id}
+                    img={resp.image_urls[0]}
+                    price={resp.price}
+                    title={resp.title}
+                    id={resp._id}
+                    descr={resp.description}
+                    category={resp.category}
+                    rating={resp.ratings}
+                    review={resp.reviews?.length}
+                    onClick={() => handleAddToCart(resp)}
+                  />
+                );
+              })
+              .reverse()}
           </div>
         </div>
       </section>

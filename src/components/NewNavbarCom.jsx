@@ -74,29 +74,35 @@ const NewNavbar = ({ active, className }) => {
                 <img src={Logo} alt="logo" className="w-36" />
               </a>
             </li>
-            {["/", "/store", "/solar-panels", "/inverters"].map(
-              (path, index) => (
-                <li key={index} className="max-lg:border-b max-lg:py-3 px-3">
-                  <a
-                    href={path}
-                    className={`text-[15px] block font-semibold ${
-                      location.pathname === path
-                        ? "text-[#007bff]"
-                        : isMenuOpen
-                        ? "text-black"
-                        : "text-white"
-                    }`}
-                  >
-                    {path === "/"
-                      ? "Home"
-                      : path
-                          .split("/")[1]
-                          .replace("-", " ")
-                          .replace(/\b\w/g, (char) => char.toUpperCase())}
-                  </a>
-                </li>
-              )
-            )}
+            {[
+              "/",
+              "/store",
+              "/solar-panels",
+              "/inverters",
+              "/lithium-battery",
+              "/solar-pump",
+              "/accessories",
+            ].map((path, index) => (
+              <li key={index} className="max-lg:border-b max-lg:py-3 px-3">
+                <a
+                  href={path}
+                  className={`text-[15px] block font-semibold ${
+                    location.pathname === path
+                      ? "text-[#007bff]"
+                      : isMenuOpen
+                      ? "text-black"
+                      : "text-white"
+                  }`}
+                >
+                  {path === "/"
+                    ? "Home"
+                    : path
+                        .split("/")[1]
+                        .replace("-", " ")
+                        .replace(/\b\w/g, (char) => char.toUpperCase())}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
