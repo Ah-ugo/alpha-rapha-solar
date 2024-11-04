@@ -305,7 +305,8 @@ export default function FeaturedProducts() {
                   </a>
                 </motion.div>
               ))
-              .reverse()}
+              .reverse()
+              .splice(0, 5)}
           </Slider>
         </div>
       </div>
