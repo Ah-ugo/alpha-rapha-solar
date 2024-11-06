@@ -18,6 +18,8 @@ import ProductCategories from "./components/ProductCategories";
 import SubServiceCards from "./components/SubServiceCards";
 import MissionBlock from "./components/MissionBlock";
 import NewNavbar from "./components/NewNavbarCom";
+import Portfolio from "./components/Portfolio";
+import SecondPortfolio from "./components/SecondPortfolio";
 
 export default function App() {
   const [navbar, setNavbar] = useState(false);
@@ -188,7 +190,8 @@ export default function App() {
       <FeaturedProducts />
       <About1 />
       <MissionBlock />
-      <Reviews />
+      {/* <Reviews /> */}
+      <SecondPortfolio />
       <Footeer />
       <Fab
         mainButtonStyles={{ backgroundColor: "#25D366" }}
