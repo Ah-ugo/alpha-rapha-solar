@@ -88,6 +88,7 @@ export function Cart({ close }) {
         icon: "success",
       });
       window.location.replace("/store");
+      localStorage.removeItem("rapha-solarcart");
     },
     onClose: () =>
       Swal.fire({
@@ -124,6 +125,19 @@ export function Cart({ close }) {
     } else {
       setCanProceed(true); // Proceed with payment
     }
+  };
+
+  const updateQuantity = (productId, newQuantity) => {
+    const updatedProducts = cartItems.products.map((item) =>
+      item._id === productId ? { ...item, quantity: newQuantity } : item
+    );
+
+    const updatedTotal = updatedProducts.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    setCartItems({ products: updatedProducts, total: updatedTotal });
   };
 
   return (
@@ -175,7 +189,11 @@ export function Cart({ close }) {
                       title={product.title}
                       specs={product.text_specifications}
                       img_uri={product.image_urls[0]}
+                      stock={product.stock}
                       remove={() => handleRemoval(product)}
+                      updateQuantity={(newQuantity) =>
+                        updateQuantity(product._id, newQuantity)
+                      }
                     />
                   ))
                 ) : (

@@ -69,7 +69,7 @@ export default function SecondPortfolio() {
           </div>
         </div>
       </div>
-      <div className="flex flex-nowrap justify-end mx-6">
+      <div className="flex flex-nowrap justify-end mx-10">
         <Link
           className="flex items-center justify-center gap-2 text-blue-900 font-semibold hover:text-blue-950"
           to={"/projects"}
