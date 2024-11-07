@@ -7,6 +7,7 @@ import ContextProvider from "./Context/mainContext";
 import { Toaster } from "react-hot-toast";
 import QuickViewPage from "./Pages/QuickView";
 import NewProductList from "./components/NewProductList";
+import NotFound from "./components/NotFound";
 
 export default function AppMain() {
   return (
@@ -17,6 +18,7 @@ export default function AppMain() {
           <Route path="/detail/:id" Component={ProductOverView} />
           <Route path="/store" Component={NewProductList} />
           <Route path="/detail2" Component={QuickViewPage} />
+          <Route path="*" Component={NotFound} />
         </Routes>
       </BrowserRouter>
       <Toaster />
