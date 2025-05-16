@@ -331,7 +331,7 @@ export default function FeaturedProducts() {
                           ₦{formatNumber(product.price)}
                         </Text>
                         <motion.a
-                          href={`/products/${product._id}`}
+                          href={`/detail/${product._id}`}
                           className="relative text-base font-semibold text-blue-900 hover:text-blue-700 flex items-center gap-2 group/link"
                           aria-label={`View details for ${product.title}`}
                           whileHover={{ x: 2 }}
