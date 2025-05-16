@@ -94,7 +94,7 @@ export default function Footeer() {
           <motion.div variants={itemVariants} className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Contact Us</h3>
             <address className="not-italic text-gray-600">
-              <p className="mb-2">4 Concorde AVE, Owerri, imo stat</p>
+              <p className="mb-2">4 Concorde AVE, Owerri, imo state</p>
               <p className="mb-2">
                 Alpha Rapha,New eke Ukwu modern market, Owerri ,Imo State
               </p>
