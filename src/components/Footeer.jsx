@@ -4,7 +4,6 @@ import Logo from "../assets/logo3-1.png";
 import { subscribeNewsLetters } from "../utils/aob";
 import toast from "react-hot-toast";
 import { Spinner } from "@chakra-ui/react";
-// import { useLoaderData } from "react-router-dom";
 
 export default function Footeer() {
   const [email, setEmail] = useState("");
@@ -12,196 +11,174 @@ export default function Footeer() {
 
   const handleEmailChange = (e) => setEmail(e.target.value);
 
-  const Subscribe = () => {
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
     setLoading(true);
-    console.log(email, "email===");
     subscribeNewsLetters(email)
       .then((resp) => {
-        console.log(resp);
-        toast.success("Successfully subscribed to newsletter", resp);
-        setLoading(false);
+        toast.success("Successfully subscribed to our newsletter!");
+        setEmail("");
       })
       .catch((error) => {
-        if (error.response) {
-          console.error("Error response data:", error.response.data);
-          console.error("Error response status:", error.response.status);
-          toast.error("Error response status: " + error.response.status);
-          setLoading(false);
-        } else if (error.request) {
-          console.error("No response received:", error.request);
-          toast.error("No response received: " + error.request);
-          setLoading(false);
-        } else {
-          console.error("Error message:", error.message);
-          toast.error("Error message: " + error.message);
-          setLoading(false);
-        }
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to subscribe. Please try again.";
+        toast.error(errorMessage);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const links = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
+    { name: "Products", href: "/products" },
+    { name: "Contact", href: "/contact" },
+  ];
+
   return (
-    <footer class="bg-white">
-      <div class="mx-auto grid max-w-screen-xl gap-y-8 gap-x-12 px-4 py-10 md:grid-cols-2 xl:grid-cols-4 xl:px-10">
-        <div class="max-w-sm">
-          <div class="mb-6 flex h-12 items-center space-x-2">
-            <motion.span
-              initial={{
-                opacity: 0,
-                // if odd index card,slide from right instead of left
-                x: 1 % 2 === 0 ? 50 : -50,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0, // Slide in to its original position
-                transition: {
-                  duration: 1, // Animation duration
-                },
-              }}
-              class="text-2xl font-bold"
-            >
-              <a href="javascript:void(0)">
-                <img src={Logo} alt="logo" className="sm:w-28 w-28" />
-              </a>
-            </motion.span>
-          </div>
-          <motion.div
-            initial={{
-              opacity: 0,
-              // if odd index card,slide from right instead of left
-              x: 1 % 2 === 0 ? 50 : -50,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0, // Slide in to its original position
-              transition: {
-                duration: 1, // Animation duration
-              },
-            }}
-            class="text-gray-500"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad a
-            officia ea expedita!
+    <footer className="bg-white border-t border-gray-200">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={containerVariants}
+        className="mx-auto max-w-7xl px-6 py-12 lg:px-8"
+      >
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Logo and Description */}
+          <motion.div variants={itemVariants} className="max-w-xs">
+            <div className="mb-6 flex items-center">
+              <img src={Logo} alt="Company Logo" className="h-12 w-auto" />
+            </div>
+            <p className="text-gray-600 text-sm leading-6">
+              Empowering sustainable futures through innovative solar solutions.
+              We provide top-tier renewable energy products tailored to your
+              needs.
+            </p>
           </motion.div>
-        </div>
-        <motion.div
-          initial={{
-            opacity: 0,
-            // if odd index card,slide from right instead of left
-            x: 1 % 2 === 0 ? 50 : -50,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0, // Slide in to its original position
-            transition: {
-              duration: 1, // Animation duration
-            },
-          }}
-          class=""
-        >
-          <div class="mt-4 mb-2 font-medium xl:mb-4">Address</div>
-          <div class="text-gray-500">
-            35 Remida Heights, <br />
-            45 Street, <br />
-            South Caroline, US
-          </div>
-        </motion.div>
-        <motion.div
-          initial={{
-            opacity: 0,
-            // if odd index card,slide from right instead of left
-            x: 1 % 2 === 0 ? 50 : -50,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0, // Slide in to its original position
-            transition: {
-              duration: 1, // Animation duration
-            },
-          }}
-          class=""
-        >
-          <div class="mt-4 mb-2 font-medium xl:mb-4">Links</div>
-          <nav aria-label="Footer Navigation" class="text-gray-500">
-            <ul class="space-y-3">
-              <li>
-                <a class="hover:text-blue-900 hover:underline" href="#">
-                  Pricing
+
+          {/* Contact Info */}
+          <motion.div variants={itemVariants} className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Contact Us</h3>
+            <address className="not-italic text-gray-600">
+              <p className="mb-2">4 Concorde AVE, Owerri, imo stat</p>
+              <p className="mb-2">
+                Alpha Rapha,New eke Ukwu modern market, Owerri ,Imo State
+              </p>
+              <p className="mb-2">Nigeria</p>
+              <p className="mt-4">
+                <a
+                  href="mailto:info@example.com"
+                  className="hover:text-blue-600"
+                >
+                  info@alpharapha.com
                 </a>
-              </li>
-              <li>
-                <a class="hover:text-blue-900 hover:underline" href="#">
-                  Demo
+              </p>
+              <p>
+                <a href="tel:07088093974" className="hover:text-blue-600">
+                  07088093974
                 </a>
-              </li>
-              <li>
-                <a class="hover:text-blue-900 hover:underline" href="#">
-                  Press
-                </a>
-              </li>
-              <li>
-                <a class="hover:text-blue-900 hover:underline" href="#">
-                  Support Hub
-                </a>
-              </li>
-              <li>
-                <a class="hover:text-blue-900 hover:underline" href="#">
-                  Contact
-                </a>
-              </li>
+              </p>
+            </address>
+          </motion.div>
+
+          {/* Quick Links */}
+          <motion.div variants={itemVariants} className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Quick Links</h3>
+            <ul className="space-y-2">
+              {links.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
-          </nav>
-        </motion.div>
-        <motion.div
-          initial={{
-            opacity: 0,
-            // if odd index card,slide from right instead of left
-            x: 1 % 2 === 0 ? 50 : -50,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0, // Slide in to its original position
-            transition: {
-              duration: 1, // Animation duration
-            },
-          }}
-          class=""
-        >
-          <div class="mt-4 mb-2 font-medium xl:mb-4">
-            Subscribe to our Newsletter
-          </div>
-          <div class="flex flex-col">
-            <div class="mb-4">
+          </motion.div>
+
+          {/* Newsletter */}
+          <motion.div variants={itemVariants} className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Newsletter</h3>
+            <p className="text-gray-600 text-sm">
+              Subscribe to our newsletter for the latest updates and offers.
+            </p>
+            <form onSubmit={handleSubscribe} className="mt-4 space-y-3">
               <input
                 type="email"
                 value={email}
                 onChange={handleEmailChange}
-                class="focus:outline mb-2 block h-14 w-full rounded-xl bg-gray-200 px-4 sm:w-80 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                placeholder="Enter your email"
+                placeholder="Your email address"
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
               />
               <button
-                onClick={Subscribe}
-                class="block rounded-xl bg-blue-900 px-6 py-3 font-medium text-white"
+                type="submit"
+                disabled={loading}
+                className="w-full bg-blue-700 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center"
               >
-                {loading ? <Spinner color="white" size={"md"} /> : "Subscribe"}
+                {loading ? <Spinner size="sm" color="white" /> : "Subscribe"}
               </button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-      <div class="bg-gray-100">
-        <div class="mx-auto flex max-w-screen-xl flex-col gap-y-4 px-4 py-3 text-center text-gray-500 sm:flex-row sm:justify-between sm:text-left">
-          <div class="">© 2024 Alpha-Rapha | All Rights Reserved</div>
-          <div class="">
-            <a class="" href="#">
+            </form>
+          </motion.div>
+        </div>
+
+        {/* Copyright */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-16 border-t border-gray-200 pt-8 flex flex-col items-center justify-between sm:flex-row"
+        >
+          <p className="text-sm text-gray-500">
+            &copy; {new Date().getFullYear()} Alpha-Rapha. All rights reserved.
+          </p>
+          <div className="mt-4 sm:mt-0 flex space-x-6">
+            <a href="#" className="text-gray-500 hover:text-gray-700 text-sm">
               Privacy Policy
             </a>
-            <span>|</span>
-            <a class="" href="#">
+            <a href="#" className="text-gray-500 hover:text-gray-700 text-sm">
               Terms of Service
             </a>
+            <a href="#" className="text-gray-500 hover:text-gray-700 text-sm">
+              Cookie Policy
+            </a>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </footer>
   );
 }

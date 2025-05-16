@@ -16,56 +16,312 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* In styles.css */
+.font-montserrat {
+  font-family: "Montserrat", sans-serif;
 }
-a:hover {
-  color: #535bf2;
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+.slick-slide img {
+  transition: transform 0.3s ease;
+}
+.slick-slide:hover img {
+  transform: scale(1.05);
+}
+.slick-dots li button:before {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+.slick-dots li.slick-active button:before {
+  color: #facc15;
+  transform: scale(1.2);
+}
+.slick-arrow {
+  z-index: 10;
+}
+.slick-prev {
+  left: 10px;
+}
+.slick-next {
+  right: 10px;
+}
+
+/* Existing styles for hero section */
+.hero-slider {
+  overflow: hidden;
+}
+
+.hero-slider .slide {
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s ease-in-out;
+}
+
+.hero-slider .slide:hover {
+  transform: scale(1.03);
+}
+
+.nav-container {
+  z-index: 10;
+}
+
+.nav-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  transform: scale(1.3);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Mobile-specific styles for hero */
+@media (max-width: 640px) {
+  .hero-slider .slide {
+    background-attachment: scroll;
+  }
+
+  .hero-slider .overlay {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  .hero-slider .overlay > div {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero-slider .text-container {
+    max-width: 90vw !important;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .hero-slider .button-container {
+    flex-direction: column;
+    gap: 12px;
+  }
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Existing styles for SubServiceCards */
+.sub-service-cards {
+  overflow: hidden;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.sub-service-cards .card {
+  transition: all 0.3s ease-in-out;
+}
+
+.sub-service-cards .card:hover {
+  transform: translateY(-8px);
+}
+
+.sub-service-cards img {
+  transition: transform 0.5s ease;
+}
+
+.sub-service-cards .shop-link {
+  position: relative;
+}
+
+.sub-service-cards .shop-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #1e40af;
+  transition: width 0.3s ease;
+}
+
+.sub-service-cards .shop-link:hover::after {
+  width: 100%;
+}
+
+/* Mobile-specific styles for SubServiceCards */
+@media (max-width: 640px) {
+  .sub-service-cards .grid {
+    gap: 16px;
   }
-  a:hover {
-    color: #747bff;
+
+  .sub-service-cards .card {
+    margin: 0 auto;
+    max-width: 90vw;
   }
-  button {
-    background-color: #f9f9f9;
+
+  .sub-service-cards img {
+    height: 200px;
   }
-} */
+
+  .sub-service-cards h2 {
+    font-size: 2rem !important;
+  }
+
+  .sub-service-cards p {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Existing styles for Service section */
+.service-section {
+  overflow: hidden;
+}
+
+.service-section .card {
+  transition: all 0.3s ease-in-out;
+}
+
+.service-section .card:hover {
+  transform: translateY(-8px);
+}
+
+.service-section .icon-container {
+  transition: transform 0.3s ease;
+}
+
+.service-section .learn-more {
+  position: relative;
+}
+
+.service-section .learn-more::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #1e40af;
+  transition: width 0.3s ease;
+}
+
+.service-section .learn-more:hover::after {
+  width: 100%;
+}
+
+/* Mobile-specific styles for Service */
+@media (max-width: 640px) {
+  .service-section .grid {
+    gap: 16px;
+  }
+
+  .service-section .card {
+    margin: 0 auto;
+    max-width: 90vw;
+  }
+
+  .service-section h2 {
+    font-size: 2rem !important;
+  }
+
+  .service-section p {
+    font-size: 0.9rem !important;
+  }
+
+  .service-section .icon-container {
+    height: 60px !important;
+    width: 60px !important;
+  }
+}
+
+/* New styles for FeaturedProducts section */
+.featured-products {
+  overflow: hidden;
+}
+
+.featured-products .slick-slider {
+  padding: 0 20px;
+}
+
+.featured-products .slick-dots li button:before {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.featured-products .slick-dots li.slick-active button:before {
+  color: #ffffff;
+  transform: scale(1.2);
+}
+
+.featured-products .card {
+  transition: all 0.3s ease-in-out;
+}
+
+.featured-products .card:hover {
+  transform: translateY(-8px);
+}
+
+.featured-products img {
+  transition: transform 0.5s ease;
+}
+
+.featured-products .view-details {
+  position: relative;
+}
+
+.featured-products .view-details::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #1e40af;
+  transition: width 0.3s ease;
+}
+
+.featured-products .view-details:hover::after {
+  width: 100%;
+}
+
+/* Mobile-specific styles for FeaturedProducts */
+@media (max-width: 640px) {
+  .featured-products .slick-slider {
+    padding: 0 10px;
+  }
+
+  .featured-products .card {
+    margin: 0 auto;
+    max-width: 90vw;
+  }
+
+  .featured-products img {
+    height: 200px;
+  }
+
+  .featured-products h2 {
+    font-size: 2rem !important;
+  }
+
+  .featured-products p {
+    font-size: 0.9rem !important;
+  }
+
+  .featured-products .slick-arrow {
+    display: none !important;
+  }
+}

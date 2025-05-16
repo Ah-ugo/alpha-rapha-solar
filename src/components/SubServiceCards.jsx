@@ -1,243 +1,161 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Center } from "@chakra-ui/react";
+import { Center, Flex, Heading, Text } from "@chakra-ui/react";
 import { BiCart } from "react-icons/bi";
 
+// Animation variants for staggered effects
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: "easeOut", type: "spring", bounce: 0.3 },
+  },
+};
+
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
 export default function SubServiceCards() {
+  // Product categories data
+  const categories = [
+    {
+      title: "Inverters",
+      description:
+        "High-efficiency inverters to convert solar energy into usable power, designed for reliability and performance.",
+      image:
+        "http://res.cloudinary.com/dejeplzpv/image/upload/v1730155721/shops/hm0azk6sbjns7ydkorvl.webp",
+    },
+    {
+      title: "Charge Controllers",
+      description:
+        "Advanced charge controllers to optimize battery charging and protect your solar system.",
+      image:
+        "http://res.cloudinary.com/dejeplzpv/image/upload/v1729780532/shops/sy8xng4ycbx8oje8oc09.webp",
+    },
+    {
+      title: "Lithium Batteries",
+      description:
+        "Long-lasting lithium batteries for efficient energy storage and consistent power supply.",
+      image:
+        "https://ueeshop.ly200-cdn.com/u_file/UPAZ/UPAZ775/2311/15/products/01-d389.jpg?x-oss-process=image/format,webp/quality,q_100/resize,m_lfit,h_500,w_500",
+    },
+    {
+      title: "Solar Street Lights",
+      description:
+        "Eco-friendly solar street lights for bright, sustainable outdoor illumination.",
+      image:
+        "http://res.cloudinary.com/dejeplzpv/image/upload/v1729780471/shops/xvsaioxifajgtqdyyrqz.webp",
+    },
+    {
+      title: "Solar Panels",
+      description:
+        "Premium solar panels delivering maximum efficiency and durability for your energy needs.",
+      image:
+        "http://res.cloudinary.com/dejeplzpv/image/upload/v1729780220/shops/tezufktdoxewn89dvpqq.webp",
+    },
+  ];
+
   return (
-    <section class="bg-white py-12 sm:py-16 lg:py-20">
-      <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-gradient-to-b from-white to-gray-50 py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <Center>
-          <div class="text-center">
+          <motion.div
+            className="text-center"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             <motion.span
-              initial={{
-                opacity: 0,
-                // if odd index card,slide from right instead of left
-                y: 2 % 2 === 0 ? 50 : -50,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0, // Slide in to its original position
-                transition: {
-                  duration: 1, // Animation duration
-                },
-              }}
-              className="mb-2 block text-lg font-semibold text-blue-900"
+              className="block text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 to-blue-600 mb-3"
+              variants={textVariants}
             >
-              Our Product Categories
+              Discover Our Range
             </motion.span>
-            {/* <h1 className="text-3xl xl:text-4xl font-semibold leading-7 xl:leading-9 text-gray-800">
-                Shop Category
-              </h1> */}
             <motion.h2
-              initial={{
-                opacity: 0,
-                // if odd index card,slide from right instead of left
-                y: 2 % 2 === 0 ? 50 : -50,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0, // Slide in to its original position
-                transition: {
-                  duration: 1, // Animation duration
-                },
-              }}
-              className="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]"
+              className="mb-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight"
+              variants={textVariants}
             >
-              Shop Categories
+              Explore Solar Product Categories
             </motion.h2>
             <motion.p
-              initial={{
-                opacity: 0,
-                // if odd index card,slide from right instead of left
-                y: 1 % 2 === 0 ? 50 : -50,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0, // Slide in to its original position
-                transition: {
-                  duration: 1, // Animation duration
-                },
-              }}
-              className="text-base text-body-color max-w-[510px]"
+              className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto"
+              variants={textVariants}
             >
-              There are many variations of passages of Lorem Ipsum available but
-              the majority have suffered alteration in some form.
+              Dive into our curated selection of solar products, designed to
+              power your life sustainably with cutting-edge technology and
+              unmatched quality.
             </motion.p>
-          </div>
+          </motion.div>
         </Center>
 
-        <div class="gap-12 mt-10 grid grid-cols-1 sm:mt-16 sm:grid-cols-2 md:grid-cols-3 xl:mt-24">
-          <div class="mx-auto max-w-screen-xl">
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
-              <div class="flex h-60 flex-col justify-between overflow-hidden">
+        <motion.div
+          className="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {categories.map((category, index) => (
+            <motion.div
+              key={index}
+              className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden"
+              variants={cardVariants}
+              whileHover={{ scale: 1.03 }}
+            >
+              <div className="relative h-64 overflow-hidden">
                 <img
-                  src="http://res.cloudinary.com/dejeplzpv/image/upload/v1730155721/shops/hm0azk6sbjns7ydkorvl.webp"
-                  class="group-hover:scale-110 h-full w-full object-cover duration-200"
+                  src={category.image}
+                  alt={`${category.title} product image`}
+                  className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
-                  Inverters
+              <div className="p-6 flex flex-col">
+                <h5 className="text-xl font-bold text-gray-900 group-hover:text-blue-900 mb-3">
+                  {category.title}
                 </h5>
-                <p class="mb-8 text-gray-600">
-                  Cras ultricies ligula sed magna dictum porta. Praesent sapien
-                  massa, convallis a pellentesque nec, egestas non nisi.
+                <p className="text-gray-600 text-sm sm:text-base mb-5 flex-grow">
+                  {category.description}
                 </p>
-                <div class="flex justify-between">
+                <Flex justify="space-between" align="center">
                   <a
                     href="/store"
-                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
+                    className="relative text-base font-semibold text-blue-900 hover:text-blue-700 flex items-center gap-2 group/link"
+                    aria-label={`Shop ${category.title}`}
                   >
-                    {/* <span>▷</span> */}
-                    <span class="underline">Shop Now</span>
+                    <span className="relative">
+                      Shop Now
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-700 group-hover/link:w-full transition-all duration-300" />
+                    </span>
+                    <motion.span
+                      className="text-blue-900"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <BiCart size={20} />
+                    </motion.span>
                   </a>
-                  <div class="max-w-full flex-none lg:px-4">
-                    {/* <h5 class="text-lg font-bold">Video 6</h5> */}
-                  </div>
-                </div>
+                </Flex>
               </div>
-            </div>
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-          </div>
-
-          <div class="mx-auto max-w-screen-xl">
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
-              <div class="flex h-60 flex-col justify-between overflow-hidden">
-                <img
-                  src="http://res.cloudinary.com/dejeplzpv/image/upload/v1729780532/shops/sy8xng4ycbx8oje8oc09.webp"
-                  class="group-hover:scale-110 h-full w-full object-cover duration-200"
-                />
-              </div>
-              <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
-                  Charge Controllers
-                </h5>
-                <p class="mb-8 text-gray-600">
-                  Cras ultricies ligula sed magna dictum porta. Praesent sapien
-                  massa, convallis a pellentesque nec, egestas non nisi.
-                </p>
-                <div class="flex justify-between">
-                  <a
-                    href="/store"
-                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
-                  >
-                    {/* <span>▷</span> */}
-                    <span class="underline">Shop Now</span>
-                  </a>
-                  <div class="max-w-full flex-none lg:px-4">
-                    {/* <h5 class="text-lg font-bold">Video 6</h5> */}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-          </div>
-
-          <div class="mx-auto max-w-screen-xl">
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
-              <div class="flex h-60 flex-col justify-between overflow-hidden">
-                <img
-                  src="https://ueeshop.ly200-cdn.com/u_file/UPAZ/UPAZ775/2311/15/products/01-d389.jpg?x-oss-process=image/format,webp/quality,q_100/resize,m_lfit,h_500,w_500"
-                  class="group-hover:scale-110 h-full w-full object-cover duration-200"
-                />
-              </div>
-              <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
-                  Lithium Batteries
-                </h5>
-                <p class="mb-8 text-gray-600">
-                  Cras ultricies ligula sed magna dictum porta. Praesent sapien
-                  massa, convallis a pellentesque nec, egestas non nisi.
-                </p>
-                <div class="flex justify-between">
-                  <a
-                    href="/store"
-                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
-                  >
-                    {/* <span>▷</span> */}
-                    <span class="underline">Shop Now</span>
-                  </a>
-                  <div class="max-w-full flex-none lg:px-4">
-                    {/* <h5 class="text-lg font-bold">Video 6</h5> */}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-          </div>
-
-          <div class="mx-auto max-w-screen-xl">
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
-              <div class="flex h-60 flex-col justify-between overflow-hidden">
-                <img
-                  src="http://res.cloudinary.com/dejeplzpv/image/upload/v1729780471/shops/xvsaioxifajgtqdyyrqz.webp"
-                  class="group-hover:scale-110 h-full w-full object-cover duration-200"
-                />
-              </div>
-              <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
-                  Solar Street Light
-                </h5>
-                <p class="mb-8 text-gray-600">
-                  Cras ultricies ligula sed magna dictum porta. Praesent sapien
-                  massa, convallis a pellentesque nec, egestas non nisi.
-                </p>
-                <div class="flex justify-between">
-                  <a
-                    href="/store"
-                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900"
-                  >
-                    {/* <span>▷</span> */}
-                    <span class="underline">Shop Now</span>
-                  </a>
-                  <div class="max-w-full flex-none lg:px-4">
-                    {/* <h5 class="text-lg font-bold">Video 6</h5> */}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-          </div>
-
-          <div class="mx-auto max-w-screen-xl">
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-            <div class="group cursor mx-4 overflow-hidden hover:rounded-2xl hover:bg-white hover:shadow-xl duration-200 hover:-translate-y-4">
-              <div class="flex h-60 flex-col justify-between overflow-hidden">
-                <img
-                  src="http://res.cloudinary.com/dejeplzpv/image/upload/v1729780220/shops/tezufktdoxewn89dvpqq.webp"
-                  class="group-hover:scale-110 h-full w-full object-cover duration-200"
-                />
-              </div>
-              <div class="flex-1 overflow-hidden bg-white px-6 py-8">
-                <h5 class="group-hover:text-blue-900 mb-4 text-xl font-bold">
-                  Solar Panel
-                </h5>
-                <p class="mb-8 text-gray-600">
-                  Cras ultricies ligula sed magna dictum porta. Praesent sapien
-                  massa, convallis a pellentesque nec, egestas non nisi.
-                </p>
-                <div class="flex justify-between">
-                  <a
-                    href="/store"
-                    class="group text-lg font-bold focus:text-blue-900 hover:text-blue-900 flex items-center gap-2"
-                  >
-                    {/* <span><BiCart size={30} /></span> */}
-                    <span class="underline">Shop Now</span>
-                  </a>
-                  <div class="max-w-full flex-none lg:px-4">
-                    {/* <h5 class="text-lg font-bold">Video 6</h5> */}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mx-2 rounded-xl bg-gray-100"></div>
-          </div>
-        </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

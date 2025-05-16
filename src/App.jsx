@@ -6,37 +6,53 @@ import bg2 from "./assets/bgWork.jpg";
 import bg3 from "./assets/imgbg1.jpg";
 import { Button } from "@nextui-org/react";
 import { Center, Flex, Heading, Text } from "@chakra-ui/react";
-import NavbarCom from "./components/NavbarCom";
-import Reviews from "./components/Reviews";
-import About1 from "./components/About1";
+import { motion } from "framer-motion";
+import NewNavbar from "./components/NewNavbarCom";
+import SubServiceCards from "./components/SubServiceCards";
 import Service from "./components/Service";
 import FeaturedProducts from "./components/FeaturedProducts";
+import About1 from "./components/About1";
+import MissionBlock from "./components/MissionBlock";
+import SecondPortfolio from "./components/SecondPortfolio";
 import Footeer from "./components/Footeer";
 import { Fab } from "react-tiny-fab";
 import { FaWhatsapp } from "react-icons/fa";
-import ProductCategories from "./components/ProductCategories";
-import SubServiceCards from "./components/SubServiceCards";
-import MissionBlock from "./components/MissionBlock";
-import NewNavbar from "./components/NewNavbarCom";
-import Portfolio from "./components/Portfolio";
-import SecondPortfolio from "./components/SecondPortfolio";
+
+// Motion components for animations
+const MotionHeading = motion(Heading);
+const MotionText = motion(Text);
+const MotionButton = motion(Button);
+const MotionDiv = motion.div;
+
+// Animation variants for staggered effects
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 export default function App() {
   const [navbar, setNavbar] = useState(false);
 
   const openWhatsApp = () => {
-    const phoneNumber = "+2347038122409"; // Replace with the phone number you want to message
-    const message = "Hello, I'm interested in your service."; // Optional: A default message
-
+    const phoneNumber = "+2347038122409";
+    const message = "Hello, I'm interested in your solar solutions!";
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
-    window.open(whatsappURL, "_blank"); // Open in a new tab
+    window.open(whatsappURL, "_blank");
   };
 
-  //navbar scroll changeBackground function
   const changeBackground = () => {
-    console.log(window.scrollY);
     if (window.scrollY >= 200) {
       setNavbar(true);
     } else {
@@ -46,14 +62,12 @@ export default function App() {
 
   useEffect(() => {
     changeBackground();
-    // adding the event when scroll change background
     window.addEventListener("scroll", changeBackground);
+    return () => window.removeEventListener("scroll", changeBackground);
   }, []);
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* fgdcj */}
-      {/* <NavbarCom active={navbar} /> */}
       <NewNavbar active={navbar} />
       <HeroSlider
         width={"100vw"}
@@ -61,146 +75,282 @@ export default function App() {
         autoplay
         controller={{
           initialSlide: 1,
-          slidingDuration: 100,
-          slidingDelay: 10,
-          onSliding: (nextSlide) =>
-            console.debug("onSliding(nextSlide): ", nextSlide),
-          onBeforeSliding: (previousSlide, nextSlide) =>
-            console.debug(
-              "onBeforeSliding(previousSlide, nextSlide): ",
-              previousSlide,
-              nextSlide
-            ),
-          onAfterSliding: (nextSlide) =>
-            console.debug("onAfterSliding(nextSlide): ", nextSlide),
+          slidingDuration: 600,
+          slidingDelay: 200,
         }}
+        className="relative overflow-x-hidden"
       >
-        <Slide background={{ backgroundImageSrc: bg1 }}>
-          <Overlay className="">
-            <div className="h-full w-full bg-black/50 px-10 md:px-28">
-              <Flex flexDirection={"column"} height={"full"}>
+        <Nav
+          className="bottom-8"
+          navStyles={{
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            borderRadius: "50%",
+            width: "12px",
+            height: "12px",
+            margin: "0 6px",
+            transition: "all 0.3s ease",
+            cursor: "pointer",
+          }}
+          activeNavStyles={{
+            backgroundColor: "#ffffff",
+            transform: "scale(1.2)",
+          }}
+        />
+
+        {/* Slide 1 */}
+        <Slide
+          background={{
+            backgroundImageSrc: bg1,
+            backgroundAttachment: "scroll",
+          }}
+        >
+          <Overlay>
+            <div className="h-full w-full bg-gradient-to-r from-black/75 via-black/50 to-transparent px-4 sm:px-8 md:px-16 lg:px-24 overflow-x-hidden">
+              <Flex flexDirection="column" height="full">
                 <Center
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                  alignItems={"flex-start"}
-                  height={"full"}
-                  maxWidth={"2xl"}
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="flex-start"
+                  height="full"
+                  maxWidth={{ base: "90%", md: "3xl" }}
                 >
-                  <Flex flexDirection={"column"} gap={7}>
-                    <Heading
-                      size={{ base: "md", md: "lg", lg: "xl" }}
-                      className="text-gray-50"
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="flex flex-col gap-5 w-full"
+                  >
+                    <MotionHeading
+                      size={{ base: "lg", sm: "xl", md: "2xl", lg: "3xl" }}
+                      className="text-white font-extrabold leading-tight text-left"
+                      variants={childVariants}
+                      style={{ maxWidth: "100%", wordWrap: "break-word" }}
                     >
-                      AlphaRapha - Your trusted partner for solar solutions
-                    </Heading>
-                    <Text
-                      fontSize={{ base: "15px", md: "18px", lg: "20px" }}
-                      className=" text-gray-300"
+                      Power Your Future with AlphaRapha
+                    </MotionHeading>
+                    <MotionText
+                      fontSize={{ base: "sm", sm: "md", md: "lg", lg: "xl" }}
+                      className="text-gray-100"
+                      variants={childVariants}
+                      style={{ maxWidth: "100%", wordWrap: "break-word" }}
                     >
-                      Upgrade to solar power today with high-quality solar
-                      panels, expert installation, and ongoing support. Join the
-                      renewable revolution and reduce your energy bills!
-                    </Text>
-                  </Flex>
-                  <Button className="mt-10 text-lg bg-blue-900 px-3 py-7 rounded-md font-semibold text-white">
-                    Start your journey
-                  </Button>
+                      Transform your energy landscape with cutting-edge solar
+                      panels, expert installation, and dedicated support.
+                      Embrace renewable energy, reduce your carbon footprint,
+                      and save on costs with our tailored solutions.
+                    </MotionText>
+                    <Flex gap={3} flexWrap="wrap">
+                      <MotionButton
+                        className="bg-gradient-to-r from-blue-700 to-blue-900 text-white text-base font-semibold py-5 px-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                        variants={childVariants}
+                        whileHover={{
+                          scale: 1.05,
+                          boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label="Get started with solar solutions"
+                      >
+                        Get Started
+                      </MotionButton>
+                      <MotionButton
+                        className="bg-transparent border-2 border-white text-white text-base font-semibold py-5 px-6 rounded-xl hover:bg-white hover:text-blue-900 transition-all duration-300"
+                        variants={childVariants}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label="Learn more about AlphaRapha"
+                      >
+                        Learn More
+                      </MotionButton>
+                    </Flex>
+                  </motion.div>
                 </Center>
               </Flex>
             </div>
           </Overlay>
         </Slide>
 
-        <Slide background={{ backgroundImageSrc: bg2 }}>
+        {/* Slide 2 */}
+        <Slide
+          background={{
+            backgroundImageSrc: bg2,
+            backgroundAttachment: "scroll",
+          }}
+        >
           <Overlay>
-            <div className="h-full bg-black/50 px-10 md:px-28">
-              <Flex flexDirection={"column"} height={"full"}>
+            <div className="h-full w-full bg-gradient-to-r from-black/75 via-black/50 to-transparent px-4 sm:px-8 md:px-16 lg:px-24 overflow-x-hidden">
+              <Flex flexDirection="column" height="full">
                 <Center
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                  alignItems={"flex-start"}
-                  height={"full"}
-                  maxWidth={"2xl"}
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="flex-start"
+                  height="full"
+                  maxWidth={{ base: "90%", md: "3xl" }}
                 >
-                  <Flex flexDirection={"column"} gap={7}>
-                    <Heading
-                      size={{ base: "md", md: "lg", lg: "xl" }}
-                      className="text-gray-50"
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="flex flex-col gap-5 w-full"
+                  >
+                    <MotionHeading
+                      size={{ base: "lg", sm: "xl", md: "2xl", lg: "3xl" }}
+                      className="text-white font-extrabold leading-tight text-left"
+                      variants={childVariants}
+                      style={{ maxWidth: "100%", wordWrap: "break-word" }}
                     >
-                      Customized solar systems tailored to your needs
-                    </Heading>
-                    <Text
-                      fontSize={{ base: "15px", md: "18px", lg: "20px" }}
-                      className=" text-gray-300"
+                      Custom Solar Solutions for You
+                    </MotionHeading>
+                    <MotionText
+                      fontSize={{ base: "sm", sm: "md", md: "lg", lg: "xl" }}
+                      className="text-gray-100"
+                      variants={childVariants}
+                      style={{ maxWidth: "100%", wordWrap: "break-word" }}
                     >
-                      At AlphaRapha, we offer professional consultation,
-                      seamless installation, and reliable maintenance services.
-                      Let us help you make the switch to sustainable energy with
-                      ease.
-                    </Text>
-                  </Flex>
-                  <Button className="mt-10 text-lg bg-blue-900 px-3 py-7 rounded-md font-semibold text-white">
-                    Book Consultation
-                  </Button>
+                      At AlphaRapha, we deliver personalized solar systems with
+                      professional consultation, seamless installation, and
+                      reliable maintenance. Transition to clean energy
+                      effortlessly and cost-effectively.
+                    </MotionText>
+                    <Flex gap={3} flexWrap="wrap">
+                      <MotionButton
+                        className="bg-gradient-to-r from-blue-700 to-blue-900 text-white text-base font-semibold py-5 px-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                        variants={childVariants}
+                        whileHover={{
+                          scale: 1.05,
+                          boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label="Book a consultation"
+                      >
+                        Book Consultation
+                      </MotionButton>
+                      <MotionButton
+                        className="bg-transparent border-2 border-white text-white text-base font-semibold py-5 px-6 rounded-xl hover:bg-white hover:text-blue-900 transition-all duration-300"
+                        variants={childVariants}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label="Explore our services"
+                      >
+                        Explore Services
+                      </MotionButton>
+                    </Flex>
+                  </motion.div>
                 </Center>
               </Flex>
             </div>
           </Overlay>
         </Slide>
 
-        <Slide background={{ backgroundImageSrc: bg3 }}>
+        {/* Slide 3 */}
+        <Slide
+          background={{
+            backgroundImageSrc: bg3,
+            backgroundAttachment: "scroll",
+          }}
+        >
           <Overlay>
-            <div className="h-full bg-black/50 px-10 md:px-28">
-              <Flex flexDirection={"column"} height={"full"}>
+            <div className="h-full w-full bg-gradient-to-r from-black/75 via-black/50 to-transparent px-4 sm:px-8 md:px-16 lg:px-24 overflow-x-hidden">
+              <Flex flexDirection="column" height="full">
                 <Center
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                  alignItems={"flex-start"}
-                  height={"full"}
-                  maxWidth={"2xl"}
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="flex-start"
+                  height="full"
+                  maxWidth={{ base: "90%", md: "3xl" }}
                 >
-                  <Flex flexDirection={"column"} gap={7}>
-                    <Heading
-                      size={{ base: "md", md: "lg", lg: "xl" }}
-                      className="text-gray-50"
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="flex flex-col gap-5 w-full"
+                  >
+                    <MotionHeading
+                      size={{ base: "lg", sm: "xl", md: "2xl", lg: "3xl" }}
+                      className="text-white font-extrabold leading-tight text-left"
+                      variants={childVariants}
+                      style={{ maxWidth: "100%", wordWrap: "break-word" }}
                     >
-                      Keep your solar systems running at peak efficiency
-                    </Heading>
-                    <Text
-                      fontSize={{ base: "15px", md: "18px", lg: "20px" }}
-                      className=" text-gray-300"
+                      Maximize Solar Efficiency
+                    </MotionHeading>
+                    <MotionText
+                      fontSize={{ base: "sm", sm: "md", md: "lg", lg: "xl" }}
+                      className="text-gray-100"
+                      variants={childVariants}
+                      style={{ maxWidth: "100%", wordWrap: "break-word" }}
                     >
-                      AlphaRapha provides quick and efficient repair services
-                      for all types of solar energy products. Ensure
-                      uninterrupted energy flow with our expert maintenance
-                      solutions.
-                    </Text>
-                  </Flex>
-                  <Button className="mt-10 text-lg bg-blue-900 px-3 py-7 rounded-md font-semibold text-white">
-                    Schedule Repair
-                  </Button>
+                      Keep your solar systems at peak performance with our
+                      expert repair and maintenance services. Enjoy
+                      uninterrupted energy with AlphaRapha’s rapid response
+                      team.
+                    </MotionText>
+                    <Flex gap={3} flexWrap="wrap">
+                      <MotionButton
+                        className="bg-gradient-to-r from-blue-700 to-blue-900 text-white text-base font-semibold py-5 px-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                        variants={childVariants}
+                        whileHover={{
+                          scale: 1.05,
+                          boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label="Schedule a repair"
+                      >
+                        Schedule Repair
+                      </MotionButton>
+                      <MotionButton
+                        className="bg-transparent border-2 border-white text-white text-base font-semibold py-5 px-6 rounded-xl hover:bg-white hover:text-blue-900 transition-all duration-300"
+                        variants={childVariants}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label="Discover maintenance plans"
+                      >
+                        Maintenance Plans
+                      </MotionButton>
+                    </Flex>
+                  </motion.div>
                 </Center>
               </Flex>
             </div>
           </Overlay>
         </Slide>
       </HeroSlider>
-      <SubServiceCards />
-      <Service />
-      <FeaturedProducts />
+
+      <MotionDiv
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <SubServiceCards />
+      </MotionDiv>
+      <MotionDiv
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <Service />
+      </MotionDiv>
+      <MotionDiv
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <FeaturedProducts />
+      </MotionDiv>
       <About1 />
       <MissionBlock />
-      {/* <Reviews /> */}
       <SecondPortfolio />
       <Footeer />
       <Fab
-        mainButtonStyles={{ backgroundColor: "#25D366" }}
-        // actionButtonStyles={actionButtonStyles}
-        style={{ bottom: 0, right: 0 }}
+        mainButtonStyles={{
+          backgroundColor: "#25D366",
+          animation: "pulse 2s infinite",
+        }}
+        style={{ bottom: 20, right: 20 }}
         icon={<FaWhatsapp />}
-        // event={event}
-        // alwaysShowTitle={true}
         onClick={openWhatsApp}
+        aria-label="Contact us on WhatsApp"
       />
     </div>
   );
